@@ -69,7 +69,7 @@ namespace ScheduleGenerator.Server
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddScoped<IDbRepository, DbRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
-            //services.AddScoped<ISchedulesRepository, SchedulesRepository>();
+            services.AddScoped<ISchedulesRepository, SchedulesRepository>();
 
             services.AddAutoMapper(typeof(Startup));
 
