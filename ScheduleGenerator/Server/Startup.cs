@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 using ScheduleGenerator.Server.Filters;
 using ScheduleGenerator.Server.Models;
+using ScheduleGenerator.Server.Repositories;
 using Serilog;
 
 namespace ScheduleGenerator.Server
@@ -59,6 +60,9 @@ namespace ScheduleGenerator.Server
 
             services.AddDbContext<ScheduleGeneratorContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ScheduleGeneratorConnection")));
+
+            services.AddScoped<IDbRepository, DbRepository>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
 
             services.AddAutoMapper(typeof(Startup));
 
