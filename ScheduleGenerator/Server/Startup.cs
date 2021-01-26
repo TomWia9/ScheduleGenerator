@@ -181,7 +181,7 @@ namespace ScheduleGenerator.Server
 
                 setupAction.DefaultModelExpandDepth(2);
                 setupAction.DefaultModelRendering(Swashbuckle.AspNetCore.SwaggerUI.ModelRendering.Model);
-                setupAction.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
+               // setupAction.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
             });
 
             app.UseHttpsRedirection();
