@@ -12,6 +12,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Serialization;
+using ScheduleGenerator.Server.Filters;
 
 namespace ScheduleGenerator.Server
 {
@@ -43,7 +44,7 @@ namespace ScheduleGenerator.Server
             {
                 options.ReturnHttpNotAcceptable = true;
 
-                //options.Filters.Add(new ValidationFilter());
+                options.Filters.Add(new ValidationFilter());
                 options.Filters.Add(
                     new ProducesResponseTypeAttribute(StatusCodes.Status400BadRequest));
                 options.Filters.Add(
