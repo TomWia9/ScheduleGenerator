@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ScheduleGenerator.Server.Models;
 
-namespace ScheduleGenerator.Server.Shared
+namespace ScheduleGenerator.Server.Shared.EntityConfiguration
 {
     public class UsersConfiguration : IEntityTypeConfiguration<User>
     {
@@ -20,6 +16,10 @@ namespace ScheduleGenerator.Server.Shared
 
             builder.Property(u => u.Password)
                 .HasMaxLength(64);
+
+            builder.HasMany(u => u.Schedules)
+                .WithOne(s => s.User)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

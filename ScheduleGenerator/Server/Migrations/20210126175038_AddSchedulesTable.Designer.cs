@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ScheduleGenerator.Server.Models;
 
 namespace ScheduleGenerator.Server.Migrations
 {
     [DbContext(typeof(ScheduleGeneratorContext))]
-    partial class ScheduleGeneratorContextModelSnapshot : ModelSnapshot
+    [Migration("20210126175038_AddSchedulesTable")]
+    partial class AddSchedulesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,12 +57,10 @@ namespace ScheduleGenerator.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Lecturer")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoomNumber")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ScheduleId")
                         .HasColumnType("int");
@@ -69,15 +69,13 @@ namespace ScheduleGenerator.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ScheduleId");
 
-                    b.ToTable("ScheduleItems");
+                    b.ToTable("ScheduleItem");
                 });
 
             modelBuilder.Entity("ScheduleGenerator.Server.Models.User", b =>

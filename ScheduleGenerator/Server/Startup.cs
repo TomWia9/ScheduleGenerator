@@ -69,6 +69,7 @@ namespace ScheduleGenerator.Server
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddScoped<IDbRepository, DbRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
+            //services.AddScoped<ISchedulesRepository, SchedulesRepository>();
 
             services.AddAutoMapper(typeof(Startup));
 
@@ -125,7 +126,7 @@ namespace ScheduleGenerator.Server
                 var currentAssembly = Assembly.GetExecutingAssembly();
                 var xmlDocs = currentAssembly.GetReferencedAssemblies()
                     .Union(new[] { currentAssembly.GetName() })
-                    .Select(a => Path.Combine(Path.GetDirectoryName(currentAssembly.Location), $"{a.Name}.xml"))
+                    .Select(a => Path.Combine(Path.GetDirectoryName(currentAssembly.Location) ?? string.Empty, $"{a.Name}.xml"))
                     .Where(File.Exists).ToList();
 
                 foreach (var d in xmlDocs)
