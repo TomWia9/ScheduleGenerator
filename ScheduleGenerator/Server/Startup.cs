@@ -9,12 +9,17 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using ScheduleGenerator.Server.Filters;
+using ScheduleGenerator.Server.Helpers;
 using ScheduleGenerator.Server.Models;
 using ScheduleGenerator.Server.Repositories;
 using Serilog;
@@ -61,6 +66,7 @@ namespace ScheduleGenerator.Server
             services.AddDbContext<ScheduleGeneratorContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ScheduleGeneratorConnection")));
 
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddScoped<IDbRepository, DbRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
 
@@ -90,30 +96,30 @@ namespace ScheduleGenerator.Server
                         }
                     });
 
-                //OpenApiSecurityScheme securityDefinition = new OpenApiSecurityScheme()
-                //{
-                //    Name = "Bearer",
-                //    BearerFormat = "JWT",
-                //    Scheme = "bearer",
-                //    Description = "Specify the authorization token.",
-                //    In = ParameterLocation.Header,
-                //    Type = SecuritySchemeType.Http,
-                //};
-                //setupAction.AddSecurityDefinition("jwt_auth", securityDefinition);
+                OpenApiSecurityScheme securityDefinition = new OpenApiSecurityScheme()
+                {
+                    Name = "Bearer",
+                    BearerFormat = "JWT",
+                    Scheme = "bearer",
+                    Description = "Specify the authorization token.",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                };
+                setupAction.AddSecurityDefinition("jwt_auth", securityDefinition);
 
-                //OpenApiSecurityScheme securityScheme = new OpenApiSecurityScheme()
-                //{
-                //    Reference = new OpenApiReference()
-                //    {
-                //        Id = "jwt_auth",
-                //        Type = ReferenceType.SecurityScheme
-                //    }
-                //};
-                //OpenApiSecurityRequirement securityRequirements = new OpenApiSecurityRequirement()
-                //{
-                //    {securityScheme, new string[] { }},
-                //};
-                //setupAction.AddSecurityRequirement(securityRequirements);
+                OpenApiSecurityScheme securityScheme = new OpenApiSecurityScheme()
+                {
+                    Reference = new OpenApiReference()
+                    {
+                        Id = "jwt_auth",
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+                OpenApiSecurityRequirement securityRequirements = new OpenApiSecurityRequirement()
+                {
+                    {securityScheme, new string[] { }},
+                };
+                setupAction.AddSecurityRequirement(securityRequirements);
 
                 //Collect all referenced projects output XML document file paths  
                 var currentAssembly = Assembly.GetExecutingAssembly();
@@ -126,9 +132,27 @@ namespace ScheduleGenerator.Server
                 {
                     setupAction.IncludeXmlComments(d);
                 }
-
-
             });
+
+            var key = Encoding.UTF8.GetBytes(Configuration.GetValue<string>("AppSettings:Secret"));
+
+            services.AddAuthentication(x =>
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -164,8 +188,10 @@ namespace ScheduleGenerator.Server
 
             app.UseSerilogRequestLogging();
 
-
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

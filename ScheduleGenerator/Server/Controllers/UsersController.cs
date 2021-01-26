@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using ScheduleGenerator.Server.Helpers;
 using ScheduleGenerator.Server.Models;
 using ScheduleGenerator.Server.Repositories;
+using ScheduleGenerator.Shared.Auth;
 using ScheduleGenerator.Shared.Dto;
 
 namespace ScheduleGenerator.Server.Controllers
@@ -25,6 +27,26 @@ namespace ScheduleGenerator.Server.Controllers
             _dbRepository = dbRepository;
             _usersRepository = usersRepository;
             _mapper = mapper;
+        }
+
+        [HttpPost("authenticate")]
+        public async Task<ActionResult<AuthenticateResponse>> Authenticate(AuthenticateRequest authenticateRequest)
+        {
+            try
+            {
+                var response = await _usersRepository.Authenticate(authenticateRequest);
+
+                if (response == null)
+                {
+                    return BadRequest(new { message = "Email or password is incorrect" });
+                }
+
+                return Ok(response);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
         }
 
         [HttpPost]
@@ -56,6 +78,7 @@ namespace ScheduleGenerator.Server.Controllers
         }
 
    
+        [Authorize]
         [HttpGet("{userId}")]
         public async Task<ActionResult<UserDto>> GetUser(int userId)
         {
