@@ -9,10 +9,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
 using System.Reflection;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Serialization;
 using ScheduleGenerator.Server.Filters;
+using Serilog;
 
 namespace ScheduleGenerator.Server
 {
@@ -52,6 +54,9 @@ namespace ScheduleGenerator.Server
 
                 options.OutputFormatters.Add(new Microsoft.AspNetCore.Mvc.Formatters.XmlSerializerOutputFormatter());
             });
+
+            services.AddAutoMapper(typeof(Startup));
+
 
             services.AddSwaggerGenNewtonsoftSupport();
 
@@ -148,6 +153,9 @@ namespace ScheduleGenerator.Server
             app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
+
+            app.UseSerilogRequestLogging();
+
 
             app.UseRouting();
 
