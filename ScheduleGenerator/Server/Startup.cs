@@ -12,8 +12,10 @@ using System.Reflection;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 using ScheduleGenerator.Server.Filters;
+using ScheduleGenerator.Server.Models;
 using Serilog;
 
 namespace ScheduleGenerator.Server
@@ -55,8 +57,10 @@ namespace ScheduleGenerator.Server
                 options.OutputFormatters.Add(new Microsoft.AspNetCore.Mvc.Formatters.XmlSerializerOutputFormatter());
             });
 
-            services.AddAutoMapper(typeof(Startup));
+            services.AddDbContext<ScheduleGeneratorContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("ScheduleGeneratorConnection")));
 
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddSwaggerGenNewtonsoftSupport();
 
