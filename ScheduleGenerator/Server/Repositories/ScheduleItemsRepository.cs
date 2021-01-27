@@ -43,7 +43,9 @@ namespace ScheduleGenerator.Server.Repositories
 
         public bool AreDatesCorrect(TimeSpan startTime, TimeSpan endTime)
         {
-            return startTime < endTime;
+            var time = endTime - startTime;
+            
+            return startTime < endTime && time.Minutes >= 15;
         }
     }
 }

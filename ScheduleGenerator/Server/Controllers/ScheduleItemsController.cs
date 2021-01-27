@@ -46,7 +46,7 @@ namespace ScheduleGenerator.Server.Controllers
 
                 if (!_scheduleItemsRepository.AreDatesCorrect(scheduleItem.StartTime, scheduleItem.EndTime))
                 {
-                    return BadRequest(new { message = "The start time starts later than the end time " });
+                    return BadRequest(new { message = "The difference between the start and end times should be at least 15 minutes " });
                 }
 
                 if (await _scheduleItemsRepository.DatesConflictAsync(scheduleId, scheduleItem.DayOfWeek,
@@ -143,7 +143,7 @@ namespace ScheduleGenerator.Server.Controllers
 
                 if (! _scheduleItemsRepository.AreDatesCorrect(scheduleItem.StartTime, scheduleItem.EndTime))
                 {
-                    return BadRequest(new { message = "The start time starts later than the end time " });
+                    return BadRequest(new { message = "The difference between the start and end times should be at least 15 minutes " });
                 }
 
                 if (await _scheduleItemsRepository.DatesConflictAsync(scheduleId, scheduleItem.DayOfWeek,
@@ -208,7 +208,7 @@ namespace ScheduleGenerator.Server.Controllers
 
                 if (!_scheduleItemsRepository.AreDatesCorrect(scheduleItemToPatch.StartTime, scheduleItemToPatch.EndTime))
                 {
-                    return BadRequest(new { message = "The start time starts later than the end time " });
+                    return BadRequest(new { message = "The difference between the start and end times should be at least 15 minutes " });
                 }
 
                 if (await _scheduleItemsRepository.DatesConflictAsync(scheduleId, scheduleItemToPatch.DayOfWeek,
