@@ -10,7 +10,7 @@ namespace ScheduleGenerator.Shared.Dto
     public abstract class ScheduleItemForManipulationDto
     {
         [Required(AllowEmptyStrings = false)]
-        [MaxLength(40, ErrorMessage = "The Subject field may contain at most 40 characters.")]
+        [MaxLength(60, ErrorMessage = "The Subject field may contain at most 60 characters.")]
         [MinLength(3, ErrorMessage = "The Subject field must contain at least 3 characters.")]
         public string Subject { get; set; }
         

@@ -16,7 +16,7 @@ namespace ScheduleGenerator.Server.Shared.EntityConfiguration
 
             builder.Property(i => i.Subject)
                 .IsRequired()
-                .HasMaxLength(40);
+                .HasMaxLength(60);
 
             builder.Property(i => i.RoomNumber)
                 .HasMaxLength(10);
