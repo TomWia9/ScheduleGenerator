@@ -21,7 +21,10 @@ namespace ScheduleGenerator.Shared.Dto
         [MaxLength(50, ErrorMessage = "The Lecturer field may contain at most 50 characters.")]
         [MinLength(3, ErrorMessage = "The Lecturer field must contain at least 3 characters.")]
         public string Lecturer { get; set; }
-        
+
+        [Required(AllowEmptyStrings = false)]
+        public DayOfWeek DayOfWeek { get; set; }
+
         [Required(AllowEmptyStrings = false)]
         public DateTime StartTime { get; set; }
         

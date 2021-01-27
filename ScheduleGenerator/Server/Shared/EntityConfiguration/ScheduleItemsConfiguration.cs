@@ -24,6 +24,9 @@ namespace ScheduleGenerator.Server.Shared.EntityConfiguration
             builder.Property(i => i.Lecturer)
                 .HasMaxLength(50);
 
+            builder.Property(i => i.DayOfWeek)
+                .IsRequired();
+
             builder.Property(i => i.StartTime)
                 .IsRequired();
 

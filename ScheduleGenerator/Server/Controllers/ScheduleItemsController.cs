@@ -189,7 +189,7 @@ namespace ScheduleGenerator.Server.Controllers
                     return BadRequest(ModelState);
                 }
 
-                //if (await _scheduleItemsRepository.DatesConflict(scheduleId, scheduleItemId, scheduleItem.StartTime, scheduleItem.EndTime))
+                //if (await _scheduleItemsRepository.DatesConflictAsync(scheduleId, scheduleItemId, scheduleItem.StartTime, scheduleItem.EndTime))
                 //{
                 //    return Conflict();
                 //}

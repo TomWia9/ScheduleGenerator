@@ -12,6 +12,7 @@ namespace ScheduleGenerator.Shared.Dto
         public string Subject { get; set; }
         public string RoomNumber { get; set; }
         public string Lecturer { get; set; }
+        public DayOfWeek DayOfWeek { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         //public TypeOfSubject TypeOfSubject { get; set; }
