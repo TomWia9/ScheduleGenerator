@@ -25,9 +25,13 @@ namespace ScheduleGenerator.Shared.Dto
         [Required(AllowEmptyStrings = false)]
         public DayOfWeek DayOfWeek { get; set; }
 
+        [Range(typeof(TimeSpan), "7:00", "20:45",
+            ErrorMessage = "The StartTime field must be between {1} and {2}")]
         [Required(AllowEmptyStrings = false)]
         public TimeSpan StartTime { get; set; }
-        
+
+        [Range(typeof(TimeSpan), "7:15", "21:00",
+            ErrorMessage = "The EndTime field must be between {1} and {2}")]
         [Required(AllowEmptyStrings = false)]
         public TimeSpan EndTime { get; set; }
         //public TypeOfSubject TypeOfSubject { get; set; }
