@@ -12,8 +12,8 @@ namespace ScheduleGenerator.Server.Models
         public string RoomNumber { get; set; }
         public string Lecturer { get; set; }
         public DayOfWeek DayOfWeek { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; }
         //public TypeOfSubject TypeOfSubject { get; set; }
         //public Color Color { get; set; }
 

@@ -27,10 +27,10 @@ namespace ScheduleGenerator.Server.Repositories
         }
 
         //scheduleItemId is null by default because when new scheduleItem is created then id is unknown yet
-        public async Task<bool> DatesConflictAsync(int scheduleId, DayOfWeek dayOfWeek, DateTime startTime, DateTime endTime, int? scheduleItemId = null)
+        public async Task<bool> DatesConflictAsync(int scheduleId, DayOfWeek dayOfWeek, TimeSpan startTime, TimeSpan endTime, int? scheduleItemId = null)
         {
             if (!await _context.ScheduleItems.Where(i => i.ScheduleId == scheduleId && i.Id != scheduleItemId && i.DayOfWeek == dayOfWeek)
-                .AnyAsync(i => !(endTime.TimeOfDay < i.StartTime.TimeOfDay || startTime.TimeOfDay > i.EndTime.TimeOfDay)))
+                .AnyAsync(i => !(endTime < i.StartTime || startTime > i.EndTime)))
                 return false;
 
             return true;
@@ -41,9 +41,9 @@ namespace ScheduleGenerator.Server.Repositories
             //no code in this implementation
         }
 
-        public bool AreDatesCorrect(DateTime start, DateTime end)
+        public bool AreDatesCorrect(TimeSpan startTime, TimeSpan endTime)
         {
-            return start.TimeOfDay < end.TimeOfDay;
+            return startTime < endTime;
         }
     }
 }

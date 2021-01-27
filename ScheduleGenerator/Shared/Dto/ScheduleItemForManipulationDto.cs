@@ -26,10 +26,10 @@ namespace ScheduleGenerator.Shared.Dto
         public DayOfWeek DayOfWeek { get; set; }
 
         [Required(AllowEmptyStrings = false)]
-        public DateTime StartTime { get; set; }
+        public TimeSpan StartTime { get; set; }
         
         [Required(AllowEmptyStrings = false)]
-        public DateTime EndTime { get; set; }
+        public TimeSpan EndTime { get; set; }
         //public TypeOfSubject TypeOfSubject { get; set; }
     }
 }
