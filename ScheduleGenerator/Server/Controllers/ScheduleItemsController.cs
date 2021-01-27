@@ -182,6 +182,13 @@ namespace ScheduleGenerator.Server.Controllers
                 var scheduleItemToPatch = _mapper.Map<ScheduleItemForUpdateDto>(scheduleItemFromRepo);
                 patchDocument.ApplyTo(scheduleItemToPatch, ModelState);
 
+                var isValid = TryValidateModel(scheduleItemToPatch);
+
+                if (!isValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
                 //if (await _scheduleItemsRepository.DatesConflict(scheduleId, scheduleItemId, scheduleItem.StartTime, scheduleItem.EndTime))
                 //{
                 //    return Conflict();
