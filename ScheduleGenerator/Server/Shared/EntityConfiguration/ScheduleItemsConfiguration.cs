@@ -32,6 +32,12 @@ namespace ScheduleGenerator.Server.Shared.EntityConfiguration
 
             builder.Property(i => i.EndTime)
                 .IsRequired();
+
+            builder.Property(i => i.TypeOfClasses)
+                .IsRequired();
+
+            builder.Property(i => i.Color)
+                .IsRequired();
         }
     }
 }

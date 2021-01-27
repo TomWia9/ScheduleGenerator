@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ScheduleGenerator.Shared.Enums;
 
 namespace ScheduleGenerator.Shared.Dto
 {
@@ -34,6 +35,8 @@ namespace ScheduleGenerator.Shared.Dto
             ErrorMessage = "The EndTime field must be between {1} and {2}")]
         [Required(AllowEmptyStrings = false)]
         public TimeSpan EndTime { get; set; }
-        //public TypeOfSubject TypeOfSubject { get; set; }
+
+        [Required(AllowEmptyStrings = false)]
+        public TypeOfClasses TypeOfClasses { get; set; }
     }
 }

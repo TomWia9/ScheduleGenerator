@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ScheduleGenerator.Server.Models;
+using ScheduleGenerator.Shared.Enums;
 
 namespace ScheduleGenerator.Server.Repositories
 {
@@ -45,7 +46,21 @@ namespace ScheduleGenerator.Server.Repositories
         {
             var time = endTime - startTime;
             
-            return startTime < endTime && time.Minutes >= 15;
+            return startTime < endTime && time.TotalMinutes >= 15;
+        }
+
+        public Color GetScheduleItemColor(TypeOfClasses typeOfClasses)
+        {
+            return typeOfClasses switch
+            {
+                TypeOfClasses.Lecture => Color.Danger,
+                TypeOfClasses.Exercises => Color.Success,
+                TypeOfClasses.Seminar => Color.Warning,
+                TypeOfClasses.Laboratories => Color.Primary,
+                TypeOfClasses.Project => Color.Secondary,
+                TypeOfClasses.Other => Color.Info,
+                _ => Color.Success
+            };
         }
     }
 }

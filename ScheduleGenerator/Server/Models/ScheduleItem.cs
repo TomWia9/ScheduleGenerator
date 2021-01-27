@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ScheduleGenerator.Shared.Enums;
 
 namespace ScheduleGenerator.Server.Models
 {
@@ -14,12 +15,9 @@ namespace ScheduleGenerator.Server.Models
         public DayOfWeek DayOfWeek { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
-        //public TypeOfSubject TypeOfSubject { get; set; }
-        //public Color Color { get; set; }
-
+        public TypeOfClasses TypeOfClasses { get; set; }
+        public Color Color { get; set; }
         public int ScheduleId { get; set; }
         public Schedule Schedule { get; set; }
-
-
     }
 }

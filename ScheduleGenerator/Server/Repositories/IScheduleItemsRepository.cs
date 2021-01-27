@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ScheduleGenerator.Server.Models;
+using ScheduleGenerator.Shared.Enums;
 
 namespace ScheduleGenerator.Server.Repositories
 {
@@ -13,5 +14,6 @@ namespace ScheduleGenerator.Server.Repositories
         Task<bool> DatesConflictAsync(int scheduleId, DayOfWeek dayOfWeek, TimeSpan startTime, TimeSpan endTime, int? scheduleItemId = null);
         void UpdateScheduleItem(ScheduleItem scheduleItem); 
         bool AreDatesCorrect(TimeSpan startTime, TimeSpan endTime);
+        Color GetScheduleItemColor(TypeOfClasses typeOfClasses);
     }
 }

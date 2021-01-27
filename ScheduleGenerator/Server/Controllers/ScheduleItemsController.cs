@@ -56,7 +56,9 @@ namespace ScheduleGenerator.Server.Controllers
                 }
 
                 var newScheduleItem = _mapper.Map<ScheduleItem>(scheduleItem);
+                newScheduleItem.Color = _scheduleItemsRepository.GetScheduleItemColor(scheduleItem.TypeOfClasses);
                 newScheduleItem.ScheduleId = scheduleId;
+                
                 _dbRepository.Add(newScheduleItem);
 
                 if (await _dbRepository.SaveChangesAsync())
@@ -160,6 +162,7 @@ namespace ScheduleGenerator.Server.Controllers
                 }
 
                 _mapper.Map(scheduleItem, scheduleItemFromRepo);
+                scheduleItemFromRepo.Color = _scheduleItemsRepository.GetScheduleItemColor(scheduleItem.TypeOfClasses);
                 _scheduleItemsRepository.UpdateScheduleItem(scheduleItemFromRepo);
 
                 if (await _dbRepository.SaveChangesAsync())
@@ -218,6 +221,7 @@ namespace ScheduleGenerator.Server.Controllers
                 }
 
                 _mapper.Map(scheduleItemToPatch, scheduleItemFromRepo);
+                scheduleItemFromRepo.Color = _scheduleItemsRepository.GetScheduleItemColor(scheduleItemToPatch.TypeOfClasses);
                 _scheduleItemsRepository.UpdateScheduleItem(scheduleItemFromRepo);
 
                 if (await _dbRepository.SaveChangesAsync())
