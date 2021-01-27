@@ -10,7 +10,8 @@ namespace ScheduleGenerator.Server.Repositories
     {
         Task<IEnumerable<ScheduleItem>> GetScheduleItemsAsync(int scheduleId);
         Task<ScheduleItem> GetScheduleItemAsync(int scheduleId, int scheduleItemId);
-        //Task<bool> DatesConflictAsync(int scheduleId, int scheduleItemId, DayOfWeek dayOfWeek, DateTime startTime, DateTime endTime)
-        void UpdateScheduleItem(ScheduleItem scheduleItem);
+        Task<bool> DatesConflictAsync(int scheduleId, DayOfWeek dayOfWeek, DateTime startTime, DateTime endTime, int? scheduleItemId = null);
+        void UpdateScheduleItem(ScheduleItem scheduleItem); 
+        bool AreDatesCorrect(DateTime start, DateTime end);
     }
 }

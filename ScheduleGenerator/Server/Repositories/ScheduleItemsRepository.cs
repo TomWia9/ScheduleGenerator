@@ -26,9 +26,24 @@ namespace ScheduleGenerator.Server.Repositories
             return await _context.ScheduleItems.FirstOrDefaultAsync(i => i.Id == scheduleItemId && i.ScheduleId == scheduleId);
         }
 
+        //scheduleItemId is null by default because when new scheduleItem is created then id is unknown yet
+        public async Task<bool> DatesConflictAsync(int scheduleId, DayOfWeek dayOfWeek, DateTime startTime, DateTime endTime, int? scheduleItemId = null)
+        {
+            if (!await _context.ScheduleItems.Where(i => i.ScheduleId == scheduleId && i.Id != scheduleItemId && i.DayOfWeek == dayOfWeek)
+                .AnyAsync(i => !(endTime.TimeOfDay < i.StartTime.TimeOfDay || startTime.TimeOfDay > i.EndTime.TimeOfDay)))
+                return false;
+
+            return true;
+        }
+
         public void UpdateScheduleItem(ScheduleItem scheduleItem)
         {
             //no code in this implementation
+        }
+
+        public bool AreDatesCorrect(DateTime start, DateTime end)
+        {
+            return start.TimeOfDay < end.TimeOfDay;
         }
     }
 }

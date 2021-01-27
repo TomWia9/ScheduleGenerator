@@ -44,6 +44,17 @@ namespace ScheduleGenerator.Server.Controllers
                     return NotFound();
                 }
 
+                if (!_scheduleItemsRepository.AreDatesCorrect(scheduleItem.StartTime, scheduleItem.EndTime))
+                {
+                    return BadRequest(new { message = "The start time starts later than the end time " });
+                }
+
+                if (await _scheduleItemsRepository.DatesConflictAsync(scheduleId, scheduleItem.DayOfWeek,
+                    scheduleItem.StartTime, scheduleItem.EndTime))
+                {
+                    return Conflict();
+                }
+
                 var newScheduleItem = _mapper.Map<ScheduleItem>(scheduleItem);
                 newScheduleItem.ScheduleId = scheduleId;
                 _dbRepository.Add(newScheduleItem);
@@ -130,10 +141,16 @@ namespace ScheduleGenerator.Server.Controllers
                     return NotFound();
                 }
 
-                //if (await _scheduleItemsRepository.DatesConflict(scheduleId, scheduleItemId, scheduleItem.StartTime, scheduleItem.EndTime))
-                //{
-                //    return Conflict();
-                //}
+                if (! _scheduleItemsRepository.AreDatesCorrect(scheduleItem.StartTime, scheduleItem.EndTime))
+                {
+                    return BadRequest(new { message = "The start time starts later than the end time " });
+                }
+
+                if (await _scheduleItemsRepository.DatesConflictAsync(scheduleId, scheduleItem.DayOfWeek,
+                    scheduleItem.StartTime, scheduleItem.EndTime, scheduleItemId))
+                {
+                    return Conflict();
+                }
 
                 var scheduleItemFromRepo = await _scheduleItemsRepository.GetScheduleItemAsync(scheduleId, scheduleItemId);
 
@@ -189,10 +206,16 @@ namespace ScheduleGenerator.Server.Controllers
                     return BadRequest(ModelState);
                 }
 
-                //if (await _scheduleItemsRepository.DatesConflictAsync(scheduleId, scheduleItemId, scheduleItem.StartTime, scheduleItem.EndTime))
-                //{
-                //    return Conflict();
-                //}
+                if (!_scheduleItemsRepository.AreDatesCorrect(scheduleItemToPatch.StartTime, scheduleItemToPatch.EndTime))
+                {
+                    return BadRequest(new { message = "The start time starts later than the end time " });
+                }
+
+                if (await _scheduleItemsRepository.DatesConflictAsync(scheduleId, scheduleItemToPatch.DayOfWeek,
+                    scheduleItemToPatch.StartTime, scheduleItemToPatch.EndTime, scheduleItemId))
+                {
+                    return Conflict();
+                }
 
                 _mapper.Map(scheduleItemToPatch, scheduleItemFromRepo);
                 _scheduleItemsRepository.UpdateScheduleItem(scheduleItemFromRepo);
