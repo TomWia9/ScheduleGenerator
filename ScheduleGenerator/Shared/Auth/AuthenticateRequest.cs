@@ -12,6 +12,7 @@ namespace ScheduleGenerator.Shared.Auth
         [Required(AllowEmptyStrings = false)]
         [MaxLength(20, ErrorMessage = "The Email field may contain at most 20 characters.")]
         [MinLength(3, ErrorMessage = "The Email field must contain at least 3 characters.")]
+        [EmailAddress]
         public string Email { get; set; }
 
        
