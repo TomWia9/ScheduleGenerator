@@ -14,6 +14,7 @@ using ScheduleGenerator.Shared.Dto;
 
 namespace ScheduleGenerator.Server.Controllers
 {
+    [Produces("application/json", "application/xml")]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -29,6 +30,14 @@ namespace ScheduleGenerator.Server.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Authenticate the user
+        /// </summary>
+        /// <param name="authenticateRequest">Email and password of user</param>
+        /// <returns>An ActionResult of type AuthenticateResponse</returns>
+        /// <response code="200">Returns the user with token</response>
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPost("authenticate")]
         public async Task<ActionResult<AuthenticateResponse>> Authenticate(AuthenticateRequest authenticateRequest)
         {
@@ -49,6 +58,15 @@ namespace ScheduleGenerator.Server.Controllers
             }
         }
 
+        /// <summary>
+        /// Create new user
+        /// </summary>
+        /// <param name="user">User to create</param>
+        /// <returns>An ActionResult of type UserDto</returns>
+        ///<response code="201">Creates and returns created user</response>
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         [HttpPost]
         public async Task<ActionResult<UserDto>> Register(UserForCreationDto user)
         {
@@ -77,7 +95,15 @@ namespace ScheduleGenerator.Server.Controllers
             return BadRequest();
         }
 
-   
+
+        /// <summary>
+        /// Get user by id
+        /// </summary>
+        /// <param name="userId">The id of user you want to get</param>
+        /// <returns>An ActionResult of type UserDto></returns>
+        /// <response code="200">Returns the requested user</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Authorize]
         [HttpGet("{userId}")]
         public async Task<ActionResult<UserDto>> GetUser(int userId)

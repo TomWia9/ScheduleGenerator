@@ -12,6 +12,8 @@ using ScheduleGenerator.Shared.Dto;
 
 namespace ScheduleGenerator.Server.Controllers
 {
+    [Produces("application/json", "application/xml")]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -28,6 +30,15 @@ namespace ScheduleGenerator.Server.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Create a new schedule
+        /// </summary>
+        /// <param name="schedule">The schedule to create</param>
+        /// <returns>An ActionResult of type ScheduleDto</returns>
+        /// <response code="201">Creates and returns the created schedule</response>
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         [HttpPost]
         public async Task<ActionResult<ScheduleDto>> NewSchedule(ScheduleForCreationDto schedule)
         {
@@ -58,6 +69,14 @@ namespace ScheduleGenerator.Server.Controllers
             return BadRequest();
         }
 
+        /// <summary>
+        /// Get schedule by id
+        /// </summary>
+        /// <param name="scheduleId">The Id of schedule you want to get</param>
+        /// <returns>An ActionResult of type ScheduleDto</returns>
+        /// <response code="200">Returns the requested schedule</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{scheduleId}")]
         public async Task<ActionResult<IEnumerable<ScheduleDto>>> GetSchedule(int scheduleId)
         {
@@ -80,6 +99,13 @@ namespace ScheduleGenerator.Server.Controllers
             return NotFound();
         }
 
+        /// <summary>
+        /// Get a list of schedules
+        /// </summary>
+        /// <returns>An ActionResult of type IEnumerable of ScheduleDto</returns>
+        /// <response code="200">Returns the list of schedules</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ScheduleDto>>> GetSchedules()
         {
@@ -102,6 +128,14 @@ namespace ScheduleGenerator.Server.Controllers
             return NotFound();
         }
 
+        /// <summary>
+        /// Update schedule
+        /// </summary>
+        /// <param name="scheduleId">The Id of schedule you want to update</param>
+        /// <param name="schedule">The schedule with updated values</param>
+        /// <returns>An IActionResult</returns>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPut("{scheduleId}")]
         public async Task<IActionResult> UpdateSchedule(int scheduleId, ScheduleForUpdateDto schedule)
         {
@@ -139,6 +173,13 @@ namespace ScheduleGenerator.Server.Controllers
 
         }
 
+        /// <summary>
+        /// Delete the schedule with given id
+        /// </summary>
+        /// <param name="scheduleId">The Id of schedule you want to delete</param>
+        /// <returns>An IActionResult</returns>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpDelete("{scheduleId}")]
         public async Task<IActionResult> DeleteSchedule(int scheduleId)
         {

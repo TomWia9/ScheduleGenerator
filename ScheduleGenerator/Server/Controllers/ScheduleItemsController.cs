@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.JsonPatch;
 
 namespace ScheduleGenerator.Server.Controllers
 {
+    [Produces("application/json", "application/xml")]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [Authorize]
     [Route("api/schedules/{scheduleId}/[controller]")]
     [ApiController]
@@ -32,6 +34,17 @@ namespace ScheduleGenerator.Server.Controllers
             _mapper = mapper;
         }
 
+
+        /// <summary>
+        /// Create a new schedule item
+        /// </summary>
+        /// <param name="scheduleId">The id of schedule for which to create item</param>
+        /// <param name="scheduleItem">The schedule item to create</param>
+        /// <returns>An ActionResult of type ScheduleItemDto</returns>
+        /// <response code="201">Creates and returns the created schedule item</response>
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         [HttpPost]
         public async Task<ActionResult<ScheduleItemDto>> NewScheduleItem(int scheduleId, ScheduleItemForCreationDto scheduleItem)
         {
@@ -82,6 +95,14 @@ namespace ScheduleGenerator.Server.Controllers
 
         }
 
+        /// <summary>
+        /// Get a list of schedule items from specified schedule
+        /// </summary>
+        /// <param name="scheduleId">The Id of schedule you want to get items from</param>
+        /// <returns>An ActionResult of type IEnumerable of ScheduleItemDto</returns>
+        /// <response code="200">Returns the requested list of items from specified schedule</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ScheduleItemDto>>> GetScheduleItems(int scheduleId)
         {
@@ -109,6 +130,15 @@ namespace ScheduleGenerator.Server.Controllers
             return NotFound();
         }
 
+        /// <summary>
+        /// Get item from specified schedule
+        /// </summary>
+        /// <param name="scheduleId">The Id of schedule you want to get item from</param>
+        /// <param name="scheduleItemId">The Id of schedule item you want to get</param>
+        /// <returns>An ActionResult of type ScheduleItemDto</returns>
+        /// <response code="200">Returns the requested item from specified schedule</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{scheduleItemId}")]
         public async Task<ActionResult<ScheduleItemDto>> GetScheduleItem(int scheduleId, int scheduleItemId)
         {
@@ -136,6 +166,16 @@ namespace ScheduleGenerator.Server.Controllers
             return NotFound();
         }
 
+        /// <summary>
+        /// Update schedule item
+        /// </summary>
+        /// <param name="scheduleId">The Id of schedule where you want to update item</param>
+        /// <param name="scheduleItemId">The Id of item you want to update</param>
+        /// <param name="scheduleItem">The schedule item with updated values</param>
+        /// <returns>An IActionResult</returns>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         [HttpPut("{scheduleItemId}")]
         public async Task<IActionResult> UpdateScheduleItem(int scheduleId, int scheduleItemId, ScheduleItemForUpdateDto scheduleItem)
         {
@@ -190,6 +230,28 @@ namespace ScheduleGenerator.Server.Controllers
 
         }
 
+        /// <summary>
+        /// Partially update a schedule item
+        /// </summary>
+        /// <param name="scheduleId">The Id of schedule where you want to partially update item</param>
+        /// <param name="scheduleItemId">The Id of item you want to partially update</param>
+        /// <param name="patchDocument">The set of operations to apply to the schedule item</param>
+        /// <returns>An IActionResult</returns>
+        /// <remarks>
+        /// Sample request (this request updates the schedule item's **lecturer** field)
+        ///
+        ///     PATCH /schedules/{scheduleId}/scheduleItems/{scheduleItemId} 
+        ///     [ 
+        ///         { 
+        ///             "op": "replace", 
+        ///             "patch": "/lecturer", 
+        ///             "value": "new value" 
+        ///         } 
+        ///     ]
+        /// </remarks>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         [HttpPatch("{scheduleItemId}")]
         public async Task<IActionResult> PartiallyUpdateScheduleItem(int scheduleId, int scheduleItemId, JsonPatchDocument<ScheduleItemForUpdateDto> patchDocument)
         {
@@ -252,6 +314,14 @@ namespace ScheduleGenerator.Server.Controllers
             return BadRequest();
         }
 
+        /// <summary>
+        /// Delete the schedule item with given id
+        /// </summary>
+        /// <param name="scheduleId">The Id of schedule you want to delete item from</param>
+        /// <param name="scheduleItemId">The id of item want to delete</param>
+        /// <returns>An IActionResult</returns>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpDelete("{scheduleItemId}")]
         public async Task<IActionResult> DeleteTodo(int scheduleId, int scheduleItemId)
         {
