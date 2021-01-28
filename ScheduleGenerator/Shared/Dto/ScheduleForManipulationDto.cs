@@ -13,5 +13,7 @@ namespace ScheduleGenerator.Shared.Dto
         [MaxLength(30, ErrorMessage = "The Name field may contain at most 30 characters.")]
         public string Name { get; set; }
 
+        public bool Has7Days { get; set; }
+
     }
 }

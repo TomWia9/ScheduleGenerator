@@ -15,6 +15,7 @@ namespace ScheduleGenerator.Server.Models
         public int  Id { get; set; }
         public string Name { get; set; }
         public DateTime DateOfCreation { get; set; }
+        public bool Has7Days { get; set; }
         public IEnumerable<ScheduleItem> ScheduleItems { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }

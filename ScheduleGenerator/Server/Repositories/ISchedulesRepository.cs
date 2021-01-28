@@ -13,6 +13,5 @@ namespace ScheduleGenerator.Server.Repositories
         Task<bool> ScheduleExistsAsync(int userId, int scheduleId);
         Task<bool> ScheduleExistsAsync(int userId, string name);
         void UpdateSchedule(Schedule schedule);
-
     }
 }

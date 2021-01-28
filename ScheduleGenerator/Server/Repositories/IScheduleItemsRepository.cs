@@ -14,6 +14,7 @@ namespace ScheduleGenerator.Server.Repositories
         Task<bool> DatesConflictAsync(int scheduleId, DayOfWeek dayOfWeek, TimeSpan startTime, TimeSpan endTime, int? scheduleItemId = null);
         void UpdateScheduleItem(ScheduleItem scheduleItem); 
         bool AreDatesCorrect(TimeSpan startTime, TimeSpan endTime);
+        bool IsDayOfWeekCorrect(int scheduleId, DayOfWeek dayOfWeek);
         Color GetScheduleItemColor(TypeOfClasses typeOfClasses);
     }
 }

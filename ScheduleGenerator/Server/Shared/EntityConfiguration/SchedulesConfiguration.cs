@@ -21,10 +21,12 @@ namespace ScheduleGenerator.Server.Shared.EntityConfiguration
             builder.Property(s => s.DateOfCreation)
                 .IsRequired();
 
+            builder.Property(s => s.Has7Days)
+                .IsRequired();
+
             builder.HasMany(s => s.ScheduleItems)
                 .WithOne(i => i.Schedule)
                 .OnDelete(DeleteBehavior.Cascade);
-
         }
     }
 }

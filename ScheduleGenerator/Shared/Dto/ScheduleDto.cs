@@ -11,6 +11,7 @@ namespace ScheduleGenerator.Shared.Dto
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime DateOfCreation { get; set; }
+        public bool Has7Days { get; set; }
         public IEnumerable<ScheduleItemDto> ScheduleItems { get; set; }
     }
 }

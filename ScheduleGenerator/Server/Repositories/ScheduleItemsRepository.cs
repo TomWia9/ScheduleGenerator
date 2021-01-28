@@ -49,6 +49,18 @@ namespace ScheduleGenerator.Server.Repositories
             return startTime < endTime && time.TotalMinutes >= 15;
         }
 
+        public bool IsDayOfWeekCorrect(int scheduleId, DayOfWeek dayOfWeek)
+        {
+            var schedule = _context.Schedules.Find(scheduleId);
+            
+            if (!schedule.Has7Days && (dayOfWeek == DayOfWeek.Saturday || dayOfWeek == DayOfWeek.Sunday))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public Color GetScheduleItemColor(TypeOfClasses typeOfClasses)
         {
             return typeOfClasses switch
