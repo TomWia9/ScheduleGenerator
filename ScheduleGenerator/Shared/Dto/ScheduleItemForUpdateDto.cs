@@ -8,7 +8,5 @@ namespace ScheduleGenerator.Shared.Dto
 {
     public class ScheduleItemForUpdateDto : ScheduleItemForManipulationDto
     {
-        //public Color Color { get; set; }
-
     }
 }
