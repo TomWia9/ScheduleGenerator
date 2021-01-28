@@ -24,6 +24,7 @@ namespace ScheduleGenerator.Shared.Dto
         public string Lecturer { get; set; }
 
         [Required(AllowEmptyStrings = false)]
+        [Range(0, 6)]
         public DayOfWeek DayOfWeek { get; set; }
 
         [Range(typeof(TimeSpan), "7:00", "20:45",
@@ -37,6 +38,7 @@ namespace ScheduleGenerator.Shared.Dto
         public TimeSpan EndTime { get; set; }
 
         [Required(AllowEmptyStrings = false)]
+        [Range(0, 6)]
         public TypeOfClasses TypeOfClasses { get; set; }
     }
 }
