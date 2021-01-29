@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using ScheduleGenerator.Client.Services;
 
 namespace ScheduleGenerator.Client
 {
@@ -19,7 +20,18 @@ namespace ScheduleGenerator.Client
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-            await builder.Build().RunAsync();
+            builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+            builder.Services.AddScoped<IUsersService, UsersService>();
+            builder.Services.AddScoped<ILocalStorageService, LocalStorageService>();
+            builder.Services.AddScoped<IHttpService, HttpService>();
+
+            var host = builder.Build();
+
+            var authenticationService = host.Services.GetRequiredService<IAuthenticationService>();
+            await authenticationService.Initialize();
+
+            await host.RunAsync();
+
         }
     }
 }

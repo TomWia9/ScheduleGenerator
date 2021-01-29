@@ -1,12 +1,29 @@
-﻿@inherits LayoutComponentBase
+﻿@using ScheduleGenerator.Client.Services
+@using ScheduleGenerator.Client.Pages
+@inherits LayoutComponentBase
+@inject IAuthenticationService AuthenticationService
 
 <div class="page">
     <div class="sidebar">
         <NavMenu />
-    </div>
+        </div>
 
     <div class="main">
+
         <div class="top-row px-4">
+            @if (AuthenticationService.User != null)
+            {
+                <p>You are logged in as @AuthenticationService.User.Email</p>
+                <NavLink class="ml-md-auto" href="logout">
+                    <span class="oi oi-arrow-thick-right" aria-hidden="true"></span> Logout
+                </NavLink>
+            }
+            else
+            {
+                <NavLink class="ml-md-auto" href="login">
+                    <span class="oi oi-person" aria-hidden="true"></span> Sign in to save your schedules
+                </NavLink>
+            }
             <NavLink class="ml-md-auto" href="swagger">
                 <span class="oi oi-arrow-thick-right" aria-hidden="true"></span> Swagger
             </NavLink>

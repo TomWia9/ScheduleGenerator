@@ -1,5 +1,20 @@
 ﻿@page "/"
+@using Microsoft.AspNetCore.Authorization
+@using ScheduleGenerator.Client.Services
+@inject IAuthenticationService AuthenticationService
 
-<h1>Hello, world!</h1>
 
-Welcome to your new app.
+<div class="card text-center mt-4">
+    <h4 class="card-header text-white" style="background: #052767;">Welcome @_email!</h4>
+</div>
+
+@code {
+
+    private string _email;
+
+    protected override void OnInitialized()
+    {
+        _email = AuthenticationService.User.Email;
+    }
+
+}

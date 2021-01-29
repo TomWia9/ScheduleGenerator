@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduleGenerator.Server", "ScheduleGenerator\Server\ScheduleGenerator.Server.csproj", "{570B27CB-A13C-470B-90C6-1CA35969F5EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleGenerator.Server", "ScheduleGenerator\Server\ScheduleGenerator.Server.csproj", "{570B27CB-A13C-470B-90C6-1CA35969F5EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduleGenerator.Client", "ScheduleGenerator\Client\ScheduleGenerator.Client.csproj", "{9D5A4965-9529-4BF2-BAF6-17A7D4C0F9D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleGenerator.Client", "ScheduleGenerator\Client\ScheduleGenerator.Client.csproj", "{9D5A4965-9529-4BF2-BAF6-17A7D4C0F9D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduleGenerator.Shared", "ScheduleGenerator\Shared\ScheduleGenerator.Shared.csproj", "{323381A4-203D-4A01-94B9-681425E8307C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScheduleGenerator.Shared", "ScheduleGenerator\Shared\ScheduleGenerator.Shared.csproj", "{323381A4-203D-4A01-94B9-681425E8307C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
