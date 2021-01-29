@@ -1,0 +1,21 @@
+﻿@using ScheduleGenerator.Client.Services
+@inject IAuthenticationService AuthenticationService
+@inject NavigationManager Navigation
+
+@if (AuthenticationService.User != null)
+{
+    <a href="authentication/profile">Hello, @AuthenticationService.User.Email!</a>
+    <button class="nav-link btn btn-link" @onclick="BeginSignOut">Log out</button>
+}
+else
+{
+    <a href="authentication/register">Register</a>
+    <a href="authentication/login">Log in</a>
+}
+
+@code{
+    private async Task BeginSignOut()
+    {
+        Navigation.NavigateTo("authentication/logout");
+    }
+}

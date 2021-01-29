@@ -44,7 +44,7 @@ namespace ScheduleGenerator.Client.Services
 
             if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
-                _navigationManager.NavigateTo("logout");
+                _navigationManager.NavigateTo("authentication/logout");
                 return;
             }
 
@@ -66,7 +66,7 @@ namespace ScheduleGenerator.Client.Services
         {
             User = null;
             await _localStorageService.RemoveItem("user");
-            _navigationManager.NavigateTo("login");
+            _navigationManager.NavigateTo("");
         }
 
         public async Task<HttpResponseMessage> Register(UserForCreationDto user)

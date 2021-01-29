@@ -1,4 +1,6 @@
-﻿@inherits LoginBase
+﻿@page "/authentication/login"
+
+@inherits LoginBase
 
 <EditForm Model="@AuthenticateRequest" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator/>

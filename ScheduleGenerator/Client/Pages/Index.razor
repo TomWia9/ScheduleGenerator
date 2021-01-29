@@ -1,11 +1,18 @@
 ﻿@page "/"
-@using Microsoft.AspNetCore.Authorization
 @using ScheduleGenerator.Client.Services
 @inject IAuthenticationService AuthenticationService
 
 
 <div class="card text-center mt-4">
-    <h4 class="card-header text-white" style="background: #052767;">Welcome @_email!</h4>
+    @if (AuthenticationService.User != null)
+    {
+        <h4 class="card-header text-white" style="background: #052767;">Welcome @_email!</h4>
+    }
+    else
+    {
+        <h4 class="card-header text-white" style="background: #052767;">Welcome!</h4>
+    }
+
 </div>
 
 @code {
@@ -14,7 +21,10 @@
 
     protected override void OnInitialized()
     {
-        _email = AuthenticationService.User.Email;
+        @if (AuthenticationService.User != null)
+        {
+            _email = AuthenticationService.User.Email;
+        }
     }
 
 }
