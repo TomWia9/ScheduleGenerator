@@ -12,5 +12,6 @@ namespace ScheduleGenerator.Client.Services
         Task Login(string username, string password);
         Task Logout();
         Task<HttpResponseMessage> Register(UserForCreationDto user);
+        bool IsUserLoggedIn();
     }
 }

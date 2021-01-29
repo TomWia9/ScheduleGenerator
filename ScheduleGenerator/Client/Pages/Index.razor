@@ -4,7 +4,7 @@
 
 
 <div class="card text-center mt-4">
-    @if (AuthenticationService.User != null)
+    @if (AuthenticationService.IsUserLoggedIn())
     {
         <h4 class="card-header text-white" style="background: #052767;">Welcome @_email!</h4>
     }
@@ -21,7 +21,7 @@
 
     protected override void OnInitialized()
     {
-        @if (AuthenticationService.User != null)
+        @if (AuthenticationService.IsUserLoggedIn())
         {
             _email = AuthenticationService.User.Email;
         }

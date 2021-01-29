@@ -2,7 +2,7 @@
 @inject IAuthenticationService AuthenticationService
 @inject NavigationManager Navigation
 
-@if (AuthenticationService.User != null)
+@if (AuthenticationService.IsUserLoggedIn())
 {
     <a href="authentication/profile">Hello, @AuthenticationService.User.Email!</a>
     <button class="nav-link btn btn-link" @onclick="BeginSignOut">Log out</button>

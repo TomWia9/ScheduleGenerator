@@ -22,7 +22,7 @@ namespace ScheduleGenerator.Client.Pages
         protected override void OnInitialized()
         {
             // redirect to home if already logged in
-            if (AuthenticationService.User != null)
+            if (AuthenticationService.IsUserLoggedIn())
             {
                 NavigationManager.NavigateTo("");
             }

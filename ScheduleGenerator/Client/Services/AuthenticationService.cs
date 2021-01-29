@@ -73,5 +73,10 @@ namespace ScheduleGenerator.Client.Services
         {
             return await _httpService.Post($"api/users", user);
         }
+
+        public bool IsUserLoggedIn()
+        {
+            return User != null;
+        }
     }
 }
