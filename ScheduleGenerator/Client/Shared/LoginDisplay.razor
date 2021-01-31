@@ -4,18 +4,21 @@
 
 @if (AuthenticationService.IsUserLoggedIn())
 {
-    <a href="authentication/profile">Hello, @AuthenticationService.User.Email!</a>
-    <button class="nav-link btn btn-link" @onclick="BeginSignOut">Log out</button>
+    <NavLink class="nav-link text-white" href="authentication/profile">
+        Hello, @AuthenticationService.User.Email!
+    </NavLink>
+
+    <NavLink class="nav-link text-white" href="authentication/logout">
+        Logout
+    </NavLink>
 }
 else
 {
-    <a href="authentication/register">Register</a>
-    <a href="authentication/login">Log in</a>
-}
+    <NavLink class="nav-link text-white" href="authentication/register">
+        Register
+    </NavLink>
 
-@code{
-    private async Task BeginSignOut()
-    {
-        Navigation.NavigateTo("authentication/logout");
-    }
+    <NavLink class="nav-link text-white" href="authentication/login">
+        Log in
+    </NavLink>
 }

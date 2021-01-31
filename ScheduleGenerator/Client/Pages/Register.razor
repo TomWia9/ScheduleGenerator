@@ -5,23 +5,23 @@
 <EditForm Model="@UserForCreation" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
     <div class="card" style="height: 500px">
-        <h4 class="card-header text-white" style="background: #052767;">Sign up to the Schedule Generator application</h4>
+        <h4 class="card-header text-white" style="background: #121212;">Sign up to the Schedule Generator application</h4>
 
 
-        <div class="card-body">
-            <div class="form-group">
+        <div class="card-body" style="background: #181818">
+            <div class="form-group text-white">
                 <label>Email</label>
-                <InputText @bind-Value="UserForCreation.Email" class="form-control" />
+                <InputText @bind-Value="UserForCreation.Email" class="form-control bg-dark" />
                 <ValidationMessage For="@(() => UserForCreation.Email)" />
             </div>
-            <div class="form-group">
+            <div class="form-group text-white">
                 <label>Password</label>
-                <InputText @bind-Value="UserForCreation.Password" type="password" class="form-control" />
+                <InputText @bind-Value="UserForCreation.Password" type="password" class="form-control bg-dark" />
                 <ValidationMessage For="@(() => UserForCreation.Password)" />
             </div>
-            <div class="form-group">
+            <div class="form-group text-white">
                 <label>Confirm password</label>
-                <InputText @bind-Value="UserForCreation.ConfirmPassword" type="password" class="form-control" />
+                <InputText @bind-Value="UserForCreation.ConfirmPassword" type="password" class="form-control bg-dark" />
                 <ValidationMessage For="@(() => UserForCreation.ConfirmPassword)" />
             </div>
 
@@ -42,7 +42,7 @@
                 <div class="alert alert-warning mt-3 mb-0">The given email is already taken</div>
             }
         </div>
-        <div class="card-footer bg-dark text-white">
+        <div class="card-footer text-white" style="background: #121212;">
             <button class="btn btn-primary">
                 @if (Loading)
                 {
