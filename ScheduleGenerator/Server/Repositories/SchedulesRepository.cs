@@ -18,12 +18,12 @@ namespace ScheduleGenerator.Server.Repositories
 
         public async Task<Schedule> GetScheduleAsync(int userId, int scheduleId)
         {
-            return await _context.Schedules.Include(s => s.ScheduleItems).FirstOrDefaultAsync(s => s.UserId == userId && s.Id == scheduleId);
+            return await _context.Schedules.FirstOrDefaultAsync(s => s.UserId == userId && s.Id == scheduleId);
         }
 
         public async Task<IEnumerable<Schedule>> GetSchedulesAsync(int userId)
         {
-            return await _context.Schedules.Include(s => s.ScheduleItems).Where(s => s.UserId == userId).ToListAsync();
+            return await _context.Schedules.Where(s => s.UserId == userId).ToListAsync();
         }
 
         public async Task<bool> ScheduleExistsAsync(int userId, int scheduleId)
