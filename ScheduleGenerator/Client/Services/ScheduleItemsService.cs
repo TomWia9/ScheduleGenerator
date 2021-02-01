@@ -16,18 +16,18 @@ namespace ScheduleGenerator.Client.Services
             _httpService = httpService;
         }
 
-        public async Task<HttpResponseMessage> CreateScheduleItem(int scheduleId, ScheduleItemForCreationDto scheduleItem)
+        public async Task<HttpResponseMessage> CreateScheduleItemAsync(int scheduleId, ScheduleItemForCreationDto scheduleItem)
         {
             return await _httpService.Post($"api/schedules/{scheduleId}/scheduleItems", scheduleItem);
         }
 
-        public async Task<HttpResponseMessage> UpdateScheduleItem(int scheduleId, int scheduleItemId, ScheduleItemForUpdateDto scheduleItem)
+        public async Task<HttpResponseMessage> UpdateScheduleItemAsync(int scheduleId, int scheduleItemId, ScheduleItemForUpdateDto scheduleItem)
         {
             return await _httpService.Put($"api/schedules/{scheduleId}/scheduleItems/{scheduleItemId}", scheduleItem);
 
         }
 
-        public async Task<HttpResponseMessage> DeleteScheduleItem(int scheduleId, int scheduleItemId)
+        public async Task<HttpResponseMessage> DeleteScheduleItemAsync(int scheduleId, int scheduleItemId)
         {
             return await _httpService.Delete($"api/schedules/{scheduleId}/scheduleItems/{scheduleItemId}");
 

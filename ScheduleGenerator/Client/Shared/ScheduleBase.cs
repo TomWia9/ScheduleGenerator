@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using ScheduleGenerator.Client.Services;
 using ScheduleGenerator.Client.Shared.Modals;
 using ScheduleGenerator.Shared.Dto;
 using ScheduleGenerator.Shared.Enums;
@@ -11,6 +12,9 @@ namespace ScheduleGenerator.Client.Shared
 {
     public class ScheduleBase : ComponentBase
     {
+        [Inject]
+        private ISchedulesService SchedulesService { get; set; }
+        
         protected ScheduleForCreationDto ScheduleForCreation = new();
         protected CreateScheduleItemModal CreateScheduleItemModal;
 
@@ -114,6 +118,10 @@ namespace ScheduleGenerator.Client.Shared
         
         protected bool Loading;
 
+        protected override async Task OnParametersSetAsync()
+        {
+            var response = SchedulesService.
+        }
 
         protected async Task HandleValidSubmit()
         {

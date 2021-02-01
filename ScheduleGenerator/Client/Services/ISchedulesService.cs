@@ -9,8 +9,10 @@ namespace ScheduleGenerator.Client.Services
 {
     public interface ISchedulesService
     {
-        Task<HttpResponseMessage> CreateSchedule(int scheduleId, ScheduleForCreationDto schedule);
-        Task<HttpResponseMessage> UpdateSchedule(int scheduleId, ScheduleForUpdateDto schedule);
-        Task<HttpResponseMessage> DeleteSchedule(int scheduleId);
+        Task<HttpResponseMessage> GetSchedulesAsync();
+
+        Task<HttpResponseMessage> CreateScheduleAsync(int scheduleId, ScheduleForCreationDto schedule);
+        Task<HttpResponseMessage> UpdateScheduleAsync(int scheduleId, ScheduleForUpdateDto schedule);
+        Task<HttpResponseMessage> DeleteScheduleAsync(int scheduleId);
     }
 }
