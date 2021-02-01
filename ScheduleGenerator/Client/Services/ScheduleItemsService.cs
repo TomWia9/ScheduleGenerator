@@ -16,6 +16,11 @@ namespace ScheduleGenerator.Client.Services
             _httpService = httpService;
         }
 
+        public async Task<HttpResponseMessage> GetScheduleItemsAsync(int scheduleId)
+        {
+            return await _httpService.Get($"api/schedules/{scheduleId}/scheduleItems");
+        }
+
         public async Task<HttpResponseMessage> CreateScheduleItemAsync(int scheduleId, ScheduleItemForCreationDto scheduleItem)
         {
             return await _httpService.Post($"api/schedules/{scheduleId}/scheduleItems", scheduleItem);

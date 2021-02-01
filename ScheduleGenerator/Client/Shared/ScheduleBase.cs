@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using ScheduleGenerator.Client.Services;
@@ -12,115 +13,31 @@ namespace ScheduleGenerator.Client.Shared
 {
     public class ScheduleBase : ComponentBase
     {
+        [Parameter]
+        public int Id { get; set; }
+
         [Inject]
-        private ISchedulesService SchedulesService { get; set; }
+        private IScheduleItemsService ScheduleItemsService { get; set; }
         
         protected ScheduleForCreationDto ScheduleForCreation = new();
         protected CreateScheduleItemModal CreateScheduleItemModal;
 
-        //mock data for now
-        protected List<ScheduleItemDto> Items = new List<ScheduleItemDto>
-        {
-            new ScheduleItemDto()
-            {
-                Id = 1,
-                Subject = "Technika mikroprocesorowa",
-                RoomNumber = "E9",
-                Lecturer = "Mr. Test",
-                DayOfWeek = DayOfWeek.Tuesday,
-                StartTime = TimeSpan.Parse("07:00"),
-                EndTime = TimeSpan.Parse("08:00"),
-                TypeOfClasses = TypeOfClasses.Exercises,
-                Color = Color.Success,
-                ScheduleId = 1
-    },
-
-            new ScheduleItemDto()
-            {
-                Id = 2,
-                Subject = "Aplikacje internetowe",
-                RoomNumber = "E12",
-                Lecturer = "Mr. Test",
-                DayOfWeek = DayOfWeek.Wednesday,
-                StartTime = TimeSpan.Parse("09:00"),
-                EndTime = TimeSpan.Parse("10:45"),
-                TypeOfClasses = TypeOfClasses.Lecture,
-                Color = Color.Danger,
-                ScheduleId = 1
-            },
-
-            new ScheduleItemDto()
-            {
-                Id = 3,
-                Subject = "Język C#",
-                RoomNumber = "c9",
-                Lecturer = "Mr. Test",
-                DayOfWeek = DayOfWeek.Friday,
-                StartTime = TimeSpan.Parse("07:00"),
-                EndTime = TimeSpan.Parse("09:00"),
-                TypeOfClasses = TypeOfClasses.Project,
-                Color = Color.Secondary,
-                ScheduleId = 1
-            },
-            new ScheduleItemDto()
-            {
-                Id = 3,
-                Subject = "Język C#",
-                RoomNumber = "c9",
-                Lecturer = "Mr. Test",
-                DayOfWeek = DayOfWeek.Friday,
-                StartTime = TimeSpan.Parse("07:00"),
-                EndTime = TimeSpan.Parse("09:00"),
-                TypeOfClasses = TypeOfClasses.Project,
-                Color = Color.Secondary,
-                ScheduleId = 1
-            },
-            new ScheduleItemDto()
-            {
-                Id = 3,
-                Subject = "Język C#",
-                RoomNumber = "c9",
-                Lecturer = "Mr. Test",
-                DayOfWeek = DayOfWeek.Friday,
-                StartTime = TimeSpan.Parse("07:00"),
-                EndTime = TimeSpan.Parse("09:00"),
-                TypeOfClasses = TypeOfClasses.Project,
-                Color = Color.Secondary,
-                ScheduleId = 1
-            },
-            new ScheduleItemDto()
-            {
-                Id = 3,
-                Subject = "Język C#",
-                RoomNumber = "c9",
-                Lecturer = "Mr. Test",
-                DayOfWeek = DayOfWeek.Thursday,
-                StartTime = TimeSpan.Parse("07:00"),
-                EndTime = TimeSpan.Parse("09:00"),
-                TypeOfClasses = TypeOfClasses.Seminar,
-                Color = Color.Warning,
-                ScheduleId = 1
-            },
-            new ScheduleItemDto()
-            {
-                Id = 3,
-                Subject = "Język C#",
-                RoomNumber = "c9",
-                Lecturer = "Mr. Test",
-                DayOfWeek = DayOfWeek.Monday,
-                StartTime = TimeSpan.Parse("07:00"),
-                EndTime = TimeSpan.Parse("09:00"),
-                TypeOfClasses = TypeOfClasses.Project,
-                Color = Color.Secondary,
-                ScheduleId = 1
-            },
-        };
+        protected IEnumerable<ScheduleItemDto> Items = new List<ScheduleItemDto>();
         
         protected bool Loading;
+        protected bool LoadFailed;
 
         protected override async Task OnParametersSetAsync()
         {
-            var response = SchedulesService.
+            var response = await ScheduleItemsService.GetScheduleItemsAsync(Id);
+            if (!response.IsSuccessStatusCode)
+            {
+                LoadFailed = true;
+            }
+            else
+            {
+                Items = await response.Content.ReadFromJsonAsync<IEnumerable<ScheduleItemDto>>();
+            }
         }
 
         protected async Task HandleValidSubmit()
