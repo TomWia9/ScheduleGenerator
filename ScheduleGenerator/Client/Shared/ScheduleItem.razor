@@ -1,0 +1,15 @@
+﻿@using ScheduleGenerator.Shared.Dto
+
+<div class="card @string.Concat("bg-", Item.Color.ToString().ToLower()) mb-2" style="width: 12rem; height: 8rem;">
+    <div class="card-body">
+        <h5 class="card-title">@($"{Item.StartTime.Hours:00}:{Item.StartTime.Minutes:00}") - @($"{Item.EndTime.Hours:00}:{Item.EndTime.Minutes:00}")</h5>
+        <h6 class="card-subtitle mb-2">@Item.Subject</h6>
+        <a href="#" class="card-link">Details</a>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public ScheduleItemDto Item { get; set; }
+}

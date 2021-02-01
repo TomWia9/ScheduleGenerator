@@ -1,47 +1,63 @@
 ﻿@page "/new"
 @inherits ScheduleCreateBase
 
-<div class="card" style="height: 600px">
-    <EditForm Model="@ScheduleForCreation" OnValidSubmit="HandleValidSubmit">
-        <DataAnnotationsValidator />
-
-        <div class="card-header text-white" style="background: #121212;">
-            <div class="form-group text-white">
-                <label class="h4">Schedule name</label>
-                <InputText @bind-Value="ScheduleForCreation.Name" class="form-control bg-dark text-white"/>
-                <ValidationMessage For="@(() => ScheduleForCreation.Name)"/>
-            </div>
-        </div>
-
-        <div class="card-body" style="background: #181818">
-
-            @* TODO *@
-            <p class="text-white">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ultricies a dolor eget ultricies. Cras erat erat, aliquam sed ornare at, commodo quis magna. Cras eget ipsum quam. Pellentesque mattis diam a justo gravida, in suscipit purus viverra. Suspendisse vestibulum tristique libero et viverra. Quisque laoreet bibendum lorem. Donec fringilla maximus erat. Integer fringilla ligula vitae libero egestas malesuada. Sed mollis tempus mauris, in pharetra nisl porta vel. Aliquam sit amet augue nec velit ultrices ultricies. Sed pulvinar mauris eget odio ultrices finibus. Vestibulum posuere ante id tincidunt euismod. Etiam viverra ipsum libero. Donec a enim leo. Aenean tempor, nibh in fermentum tincidunt, purus eros ornare elit, id tincidunt massa augue a tellus.
-                Nunc scelerisque elit a dictum pulvinar. Donec congue diam eu felis pulvinar ultricies. Etiam consectetur, mauris ut ultrices ultrices, urna sem sollicitudin felis, id venenatis turpis quam eget massa. Aliquam erat volutpat. Ut laoreet luctus diam non interdum. Ut vel elit nec leo mattis tempus vitae vel ipsum. Quisque congue sagittis magna a bibendum. Donec a posuere justo, vestibulum porta purus. Nam sollicitudin, odio at euismod pretium, nulla erat sollicitudin diam, vel lobortis mi tellus at dui. Nam eu arcu laoreet justo imperdiet finibus vitae eu felis. Nunc nec eros vehicula magna gravida auctor sit amet a nisl. In lacinia malesuada ornare. Aliquam erat volutpat.
-                Nunc nec blandit risus. Nam tristique pellentesque erat a laoreet. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec viverra lectus vitae lacus egestas luctus. Sed facilisis est at erat ultricies gravida. Quisque at consequat ipsum. Vivamus tincidunt enim quis congue molestie. Sed ultricies ante orci, quis dignissim arcu aliquam eu. Mauris nisi orci, consequat vitae leo et, eleifend porttitor lectus.
-                Aenean viverra fermentum eros eget cursus. Curabitur lobortis, lorem non condimentum laoreet, orci enim condimentum nunc, non bibendum eros lacus quis metus. Etiam facilisis velit non nisi lobortis semper. Nullam sodales tempor velit, in commodo velit cursus ut. Pellentesque nec blandit quam. Duis feugiat sit amet augue id laoreet. Pellentesque interdum vulputate vestibulum. Sed a eros efficitur, finibus felis sit amet, finibus eros. Etiam ante nisl, ornare et tristique in, dictum eget leo. Ut pharetra metus at risus posuere faucibus. Vestibulum ultricies ligula velit, non auctor erat maximus non.
-            </p>
-
-        </div>
-
-        <div class="card-footer text-white d-flex justify-content-between" style="background: #121212;">
-            <button class="btn btn-primary" @onclick="() => CreateScheduleItemModal.Open()" type="button">
-                Add item
-            </button>
-            <button class="btn btn-primary" type="submit">
-                @if (Loading)
-                {
-                    <span class="spinner-border spinner-border-sm mr-1"></span>
-                }
-                Save schedule
-            </button>
-            <button class="btn btn-primary" type="button">
-                Download schedule in pdf format
-            </button>
-        </div>
-    </EditForm>
-
-    <CreateScheduleItemModal @ref="CreateScheduleItemModal"></CreateScheduleItemModal>
-
+<div class="sticky-top d-flex justify-content-md-around mb-2 text-white w-100 border-bottom border-white">
+    <h6>Monday</h6>
+    <h6>Tuesday</h6>
+    <h6>Wednesday</h6>
+    <h6 class="mr-3">Thursday</h6>
+    <h6 class="mr-3">Friday</h6>
 </div>
+
+<div class="d-flex justify-content-around mb-2" style="overflow-y: auto; height: 550px">
+
+    <div class="text-white">
+       @foreach (var item in Items.Where(i => i.DayOfWeek == DayOfWeek.Monday))
+       {
+           <ScheduleItem Item="item"></ScheduleItem>
+       }
+    </div>
+    <div class="text-white">
+        @foreach (var item in Items.Where(i => i.DayOfWeek == DayOfWeek.Tuesday))
+        {
+            <ScheduleItem Item="item"></ScheduleItem>
+        }
+    </div>
+    <div class="text-white">
+        @foreach (var item in Items.Where(i => i.DayOfWeek == DayOfWeek.Wednesday))
+        {
+            <ScheduleItem Item="item"></ScheduleItem>
+        }
+    </div>
+    <div class="text-white">
+        @foreach (var item in Items.Where(i => i.DayOfWeek == DayOfWeek.Thursday))
+        {
+            <ScheduleItem Item="item"></ScheduleItem>
+        }
+    </div>
+    <div class="text-white">
+        @foreach (var item in Items.Where(i => i.DayOfWeek == DayOfWeek.Friday))
+        {
+            <ScheduleItem Item="item"></ScheduleItem>
+        }
+    </div>
+</div>
+
+<div class="w-100 d-flex justify-content-around border-top border-white mb-2">
+    <button class="btn btn-primary mt-3 w-25" @onclick="() => CreateScheduleItemModal.Open()" type="button">
+        Add item
+        </button>
+    <button class="btn btn-primary mt-3 w-25" type="submit">
+        @if (Loading)
+        {
+            <span class="spinner-border spinner-border-sm mr-1"></span>
+        }
+        Save schedule
+    </button>
+    <button class="btn btn-primary mt-3 w-25" type="button">
+        Download as pdf
+    </button>
+</div>
+
+<CreateScheduleItemModal @ref="CreateScheduleItemModal"></CreateScheduleItemModal>
+
