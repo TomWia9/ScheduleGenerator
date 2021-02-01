@@ -23,6 +23,7 @@ namespace ScheduleGenerator.Client
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
             builder.Services.AddScoped<IUsersService, UsersService>();
             builder.Services.AddScoped<ILocalStorageService, LocalStorageService>();
+            builder.Services.AddScoped<IScheduleItemsService, ScheduleItemsService>();
             builder.Services.AddScoped<IHttpService, HttpService>();
 
             var host = builder.Build();
