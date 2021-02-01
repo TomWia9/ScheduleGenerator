@@ -1,0 +1,146 @@
+﻿@using ScheduleGenerator.Shared.Dto
+@using ScheduleGenerator.Shared.Enums
+@using System.ComponentModel
+<div class="modal @ModalClass" tabindex="-1" role="dialog" style="display:@ModalDisplay">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #121212;">
+                <h5 class="modal-title text-white">Add schedule item</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" @onclick="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <EditForm Model="@ScheduleItemForCreation" OnValidSubmit="@(async () => await AddScheduleItemAsync())">
+                <DataAnnotationsValidator />
+
+                <div class="modal-body d-flex justify-content-around align-items-center" style="background: #181818">
+
+                    @if (_creationFailed)
+                    {
+                        <p class="text-danger">Creation failed</p>
+                    }
+                    else
+                    {
+                        <div>
+                            <div class="form-group mb-2 text-white">
+                                <label>Subject name</label>
+                                <InputText @bind-Value="ScheduleItemForCreation.Subject" class="form-control text-white bg-dark" />
+                                <ValidationMessage For="@(() => ScheduleItemForCreation.Subject)" />
+                            </div>
+
+                            <div class="form-group mb-2 text-white">
+                                <label>Room Number</label>
+                                <InputText @bind-Value="ScheduleItemForCreation.RoomNumber" class="form-control text-white bg-dark" />
+                                <ValidationMessage For="@(() => ScheduleItemForCreation.RoomNumber)" />
+                            </div>
+
+                            <div class="form-group mb-2 text-white">
+                                <label>Lecturer</label>
+                                <InputText @bind-Value="ScheduleItemForCreation.Lecturer" class="form-control text-white bg-dark" />
+                                <ValidationMessage For="@(() => ScheduleItemForCreation.Lecturer)" />
+                            </div>
+
+                            <div class="form-group mb-2 text-white">
+                                <label>Type of classes</label>
+                                <InputSelect @bind-Value="ScheduleItemForCreation.TypeOfClasses" class="form-control text-white bg-dark">
+                                    @foreach (var typeOfClasses in Enum.GetValues(typeof(TypeOfClasses)))
+                                    {
+                                        <option value="@typeOfClasses">@typeOfClasses</option>
+                                    }
+                                </InputSelect>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="form-group mb-2 text-white">
+                                <label>Day of week</label>
+                                <InputSelect @bind-Value="ScheduleItemForCreation.DayOfWeek" class="form-control text-white bg-dark">
+                                    @foreach (var dayOfWeek in Enum.GetValues(typeof(DayOfWeek)))
+                                    {
+                                        <option value="@dayOfWeek">@dayOfWeek</option>
+                                    }
+                                </InputSelect>
+                            </div>
+                            <div class="form-group mb-2 text-white">
+                                <label>Start time</label>
+                                <input type="time" @bind="_startTime" min="07:00" max="20:45" required class="form-control text-white bg-dark"/>
+                            </div>
+
+                            <div class="form-group mb-2 text-white">
+                                <label>End time</label>
+                                <input type="time" @bind="_endTime" min="07:15" max="21:00" required class="form-control text-white bg-dark"/>
+                            </div>
+                        </div>
+
+                        
+
+                    }
+                </div>
+                <div class="modal-footer d-flex justify-content-between" style="background: #121212;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="Close">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </EditForm>
+
+        </div>
+    </div>
+</div>
+
+
+@if (ShowBackdrop)
+{
+    <div class="modal-backdrop fade show"></div>
+}
+
+
+@code {
+
+    private ScheduleItemForCreationDto ScheduleItemForCreation { get; } = new();
+    private DateTime _startTime;
+    private DateTime _endTime;
+
+    [Parameter]
+    public EventCallback OnScheduleItemCreated { get; set; }
+
+    public string ModalDisplay = "none;";
+    public string ModalClass = "";
+    public bool ShowBackdrop = false;
+
+    private bool _creationFailed = false;
+
+    public void Open()
+    {
+        ModalDisplay = "block;";
+        ModalClass = "Show";
+        ShowBackdrop = true;
+        StateHasChanged();
+    }
+
+    public void Close()
+    {
+        ModalDisplay = "none";
+        ModalClass = "";
+        ShowBackdrop = false;
+        StateHasChanged();
+    }
+
+    private async Task AddScheduleItemAsync()
+    {
+        Console.WriteLine("Schedule item created");
+        ScheduleItemForCreation.StartTime = _startTime.TimeOfDay;
+        ScheduleItemForCreation.EndTime = _endTime.TimeOfDay;
+
+        foreach(PropertyDescriptor descriptor in TypeDescriptor.GetProperties(ScheduleItemForCreation))
+        {
+            string name=descriptor.Name;
+            object value=descriptor.GetValue(ScheduleItemForCreation);
+            Console.WriteLine("{0}={1}",name,value);
+        }
+
+        Console.WriteLine(ScheduleItemForCreation.Subject);
+        await OnScheduleItemCreated.InvokeAsync();
+        Close();
+    }
+
+}

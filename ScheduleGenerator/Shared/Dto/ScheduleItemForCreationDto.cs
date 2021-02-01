@@ -8,5 +8,10 @@ namespace ScheduleGenerator.Shared.Dto
 {
     public class ScheduleItemForCreationDto : ScheduleItemForManipulationDto
     {
+        public ScheduleItemForCreationDto()
+        {
+            StartTime = TimeSpan.Parse("07:00");
+            EndTime = TimeSpan.Parse("08:00");
+        }
     }
 }
