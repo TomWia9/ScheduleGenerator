@@ -9,7 +9,7 @@ using ScheduleGenerator.Shared.Enums;
 
 namespace ScheduleGenerator.Client.Shared
 {
-    public class ScheduleCreateBase : ComponentBase
+    public class ScheduleBase : ComponentBase
     {
         protected ScheduleForCreationDto ScheduleForCreation = new();
         protected CreateScheduleItemModal CreateScheduleItemModal;

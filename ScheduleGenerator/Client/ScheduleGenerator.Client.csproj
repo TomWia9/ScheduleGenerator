@@ -6,11 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Shared\ScheduleCreate.razor.css" />
+    <None Remove="Shared\Schedule.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Shared\ScheduleCreate.razor.css" />
+    <Content Include="Shared\Schedule.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
