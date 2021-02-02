@@ -1,5 +1,7 @@
 ﻿@using ScheduleGenerator.Client.Services
+@using ScheduleGenerator.Shared.Dto
 @inject IAuthenticationService AuthenticationService
+@inject ISchedulesService SchedulesService
 
 <div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">Schedule Generator</a>
@@ -21,22 +23,87 @@
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="schedules">
-                <span class="oi oi-home" aria-hidden="true"></span> Schedules
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="new">
-                <span class="oi oi-home" aria-hidden="true"></span> New schedule
+            <NavLink class="nav-link" href="schedules/new">
+                <span class="oi oi-plus" aria-hidden="true"></span> New schedule
             </NavLink>
         </li>
     </ul>
+    
+    <hr class="bg-white"/>
+    <ul class="nav flex-column">
+        @if (loading)
+        {
+            <li class="nav-item px-3">
+                <div class="d-flex align-items-center text-white">
+                    <strong>Loading...</strong>
+                    <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+                </div>
+            </li>
+        }
+        else
+        {
+            if (loadFailed)
+            {
+                <li class="nav-item px-3">
+                    <div class="d-flex align-items-center text-white">
+                        <strong>Load failed</strong>
+                    </div>
+                </li>
+            }
+            else if (!_schedules.Any())
+            {
+                <li class="nav-item px-3">
+                    <div class="d-flex align-items-center text-white">
+                        <strong>No schedule exists</strong>
+                    </div>
+                </li>
+            }
+            else
+            {
+                @foreach (var schedule in _schedules)
+                {
+                    var href = "schedules/" + schedule.Id;
+                    <li class="nav-item px-3">
+                        <NavLink class="nav-link" href=@href>
+                            <span class="oi oi-list" aria-hidden="true"></span>
+                            <span class="d-inline-block text-truncate" style="max-width: 140px;">@schedule.Name</span>
+                        </NavLink>
+                    </li>
+                }
+            }
+        }
+
+    </ul>
+
 </div>
 
 @code {
     private bool collapseNavMenu = true;
+    private bool loadFailed;
+    private bool loading;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private IEnumerable<ScheduleDto> _schedules = new List<ScheduleDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        loading = true;
+
+        var response = await SchedulesService.GetSchedulesAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            _schedules = await response.Content.ReadFromJsonAsync<IEnumerable<ScheduleDto>>();
+        }
+        else
+        {
+            loadFailed = true;
+        }
+
+        loading = false;
+
+    }
 
     private void ToggleNavMenu()
     {
