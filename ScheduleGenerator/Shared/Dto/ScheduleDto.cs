@@ -27,9 +27,5 @@ namespace ScheduleGenerator.Shared.Dto
         /// Schedule has 7 days flag
         /// </summary>
         public bool Has7Days { get; set; }
-        /// <summary>
-        /// The list of items belonging to this schedule
-        /// </summary>
-        public IEnumerable<ScheduleItemDto> ScheduleItems { get; set; }
     }
 }
