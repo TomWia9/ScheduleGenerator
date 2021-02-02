@@ -19,7 +19,7 @@ namespace ScheduleGenerator.Server.Repositories
 
         public async Task<IEnumerable<ScheduleItem>> GetScheduleItemsAsync(int scheduleId)
         {
-            return await _context.ScheduleItems.Where(i => i.ScheduleId == scheduleId).ToListAsync();
+            return await _context.ScheduleItems.Where(i => i.ScheduleId == scheduleId).OrderBy(i => i.StartTime).ToListAsync();
         }
 
         public async Task<ScheduleItem> GetScheduleItemAsync(int scheduleId, int scheduleItemId)
