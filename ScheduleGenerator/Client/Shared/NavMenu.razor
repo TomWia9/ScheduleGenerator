@@ -29,51 +29,54 @@
         </li>
     </ul>
     
-    <hr class="bg-white"/>
-    <ul class="nav flex-column">
-        @if (loading)
-        {
-            <li class="nav-item px-3">
-                <div class="d-flex align-items-center text-white">
-                    <strong>Loading...</strong>
-                    <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
-                </div>
-            </li>
-        }
-        else
-        {
-            if (loadFailed)
+    @if (AuthenticationService.IsUserLoggedIn())
+    {
+        <hr class="bg-white"/>
+        <ul class="nav flex-column">
+            @if (loading)
             {
                 <li class="nav-item px-3">
                     <div class="d-flex align-items-center text-white">
-                        <strong>Load failed</strong>
-                    </div>
-                </li>
-            }
-            else if (!_schedules.Any())
-            {
-                <li class="nav-item px-3">
-                    <div class="d-flex align-items-center text-white">
-                        <strong>No schedule exists</strong>
+                        <strong>Loading...</strong>
+                        <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
                     </div>
                 </li>
             }
             else
             {
-                @foreach (var schedule in _schedules)
+                if (loadFailed)
                 {
-                    var href = "schedules/" + schedule.Id;
                     <li class="nav-item px-3">
-                        <NavLink class="nav-link" href=@href>
-                            <span class="oi oi-list" aria-hidden="true"></span>
-                            <span class="d-inline-block text-truncate" style="max-width: 140px;">@schedule.Name</span>
-                        </NavLink>
+                        <div class="d-flex align-items-center text-white">
+                            <strong>Load failed</strong>
+                        </div>
                     </li>
                 }
+                else if (!_schedules.Any())
+                {
+                    <li class="nav-item px-3">
+                        <div class="d-flex align-items-center text-white">
+                            <strong>No schedule exists</strong>
+                        </div>
+                    </li>
+                }
+                else
+                {
+                    @foreach (var schedule in _schedules)
+                    {
+                        var href = "schedules/" + schedule.Id;
+                        <li class="nav-item px-3">
+                            <NavLink class="nav-link" href=@href>
+                                <span class="oi oi-list" aria-hidden="true"></span>
+                                <span class="d-inline-block text-truncate" style="max-width: 140px;">@schedule.Name</span>
+                            </NavLink>
+                        </li>
+                    }
+                }
             }
-        }
 
-    </ul>
+        </ul>
+    }
 
 </div>
 
@@ -88,21 +91,23 @@
 
     protected override async Task OnInitializedAsync()
     {
-        loading = true;
-
-        var response = await SchedulesService.GetSchedulesAsync();
-
-        if (response.IsSuccessStatusCode)
+        @if (AuthenticationService.IsUserLoggedIn())
         {
-            _schedules = await response.Content.ReadFromJsonAsync<IEnumerable<ScheduleDto>>();
-        }
-        else
-        {
-            loadFailed = true;
-        }
+            loading = true;
 
-        loading = false;
+            var response = await SchedulesService.GetSchedulesAsync();
 
+            if (response.IsSuccessStatusCode)
+            {
+                _schedules = await response.Content.ReadFromJsonAsync<IEnumerable<ScheduleDto>>();
+            }
+            else
+            {
+                loadFailed = true;
+            }
+
+            loading = false;
+        }
     }
 
     private void ToggleNavMenu()
