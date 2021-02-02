@@ -1,0 +1,30 @@
+﻿@page "/schedules/new"
+@inherits NewScheduleBase
+
+<div class="card text-center mt-4">
+    <h4 class="card-header text-white" style="background: #121212;">Create new schedule</h4>
+    <div class="card-body text-center justify-content-center" style="background: #181818">
+
+        <EditForm Model="@ScheduleForCreation" OnValidSubmit="@(async () => await CreateScheduleAsync())">
+            <DataAnnotationsValidator />
+            <div class="form-group text-white">
+                <div class="col-sm-8 offset-sm-2 text-center">
+                    <label>Title</label>
+                    <InputText @bind-Value="ScheduleForCreation.Name" class="form-control bg-dark text-white" />
+                    <ValidationMessage For="@(() => ScheduleForCreation.Name)" />
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Create</button>
+        </EditForm>
+
+        @if (Conflict)
+        {
+            <div class="alert alert-warning mt-3 mb-0">Schedule with this name already exists</div>
+
+        }
+        else if (CreationFailed)
+        {
+            <div class="alert alert-danger mt-3 mb-0">Something went wrong, try again later</div>
+        }
+    </div>
+</div>
