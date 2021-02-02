@@ -11,7 +11,7 @@ namespace ScheduleGenerator.Client.Services
     {
         Task<HttpResponseMessage> GetSchedulesAsync();
 
-        Task<HttpResponseMessage> CreateScheduleAsync(int scheduleId, ScheduleForCreationDto schedule);
+        Task<HttpResponseMessage> CreateScheduleAsync(ScheduleForCreationDto schedule);
         Task<HttpResponseMessage> UpdateScheduleAsync(int scheduleId, ScheduleForUpdateDto schedule);
         Task<HttpResponseMessage> DeleteScheduleAsync(int scheduleId);
     }
