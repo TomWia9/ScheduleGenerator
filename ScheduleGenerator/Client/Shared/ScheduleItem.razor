@@ -1,10 +1,9 @@
 ﻿@using ScheduleGenerator.Shared.Dto
 
-<div class="card @string.Concat("bg-", Item.Color.ToString().ToLower()) mb-2" style="width: 12rem; height: 8rem;">
+<div role="button" class="card @string.Concat("bg-", Item.Color.ToString().ToLower()) my-2" style="width: 12rem; height: 9.5rem; cursor: pointer;">
     <div class="card-body">
         <h5 class="card-title">@($"{Item.StartTime.TimeOfDay.Hours:00}:{Item.StartTime.TimeOfDay.Minutes:00}") - @($"{Item.EndTime.TimeOfDay.Hours:00}:{Item.EndTime.TimeOfDay.Minutes:00}")</h5>
         <h6 class="card-subtitle mb-2">@Item.Subject</h6>
-        <a href="#" class="card-link">Details</a>
     </div>
 </div>
 

@@ -7,10 +7,12 @@
 
   <ItemGroup>
     <None Remove="Shared\Schedule.razor.css" />
+    <None Remove="Shared\ScheduleItem.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Shared\Schedule.razor.css" />
+    <Content Include="Shared\ScheduleItem.razor.css" />
   </ItemGroup>
 
   <ItemGroup>

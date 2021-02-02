@@ -14,7 +14,7 @@ namespace ScheduleGenerator.Shared.Dto
         /// The subject of classes
         /// </summary>
         [Required(AllowEmptyStrings = false)]
-        [MaxLength(100, ErrorMessage = "The Subject field may contain at most 60 characters.")]
+        [MaxLength(100, ErrorMessage = "The Subject field may contain at most 100 characters.")]
         [MinLength(3, ErrorMessage = "The Subject field must contain at least 3 characters.")]
         public string Subject { get; set; }
         /// <summary>
