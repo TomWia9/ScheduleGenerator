@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -32,8 +33,9 @@ namespace ScheduleGenerator.Client.Shared
             await LoadItems();
         }
 
-        protected async Task LoadItems()
+        private async Task LoadItems()
         {
+            Loading = true;
             var response = await ScheduleItemsService.GetScheduleItemsAsync(Id);
             if (!response.IsSuccessStatusCode)
             {
@@ -43,6 +45,17 @@ namespace ScheduleGenerator.Client.Shared
             {
                 Items = await response.Content.ReadFromJsonAsync<IEnumerable<ScheduleItemDto>>();
             }
+            Loading = false;
+
+        }
+
+        protected void AddItem(ScheduleItemDto scheduleItem)
+        {
+            if (scheduleItem == null) return;
+            var scheduleItems = Items.ToList();
+            scheduleItems.Add(scheduleItem);
+            Items = scheduleItems;
+            StateHasChanged();
         }
 
     }

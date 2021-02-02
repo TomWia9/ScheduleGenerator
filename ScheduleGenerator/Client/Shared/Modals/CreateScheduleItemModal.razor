@@ -111,7 +111,7 @@
     private ScheduleItemForCreationDto ScheduleItemForCreation { get; set; } = new();
 
     [Parameter]
-    public EventCallback OnScheduleItemCreated { get; set; }
+    public Action<ScheduleItemDto> OnScheduleItemCreated { get; set; }
 
     [Parameter]
     public int ScheduleId { get; set; }
@@ -149,21 +149,12 @@
 
     private async Task AddScheduleItemAsync()
     {
-        Console.WriteLine("Schedule item created");
-        Console.WriteLine("schedule id: " + ScheduleId);
-
-        foreach(PropertyDescriptor descriptor in TypeDescriptor.GetProperties(ScheduleItemForCreation))
-        {
-            string name=descriptor.Name;
-            object value=descriptor.GetValue(ScheduleItemForCreation);
-            Console.WriteLine("{0}={1}",name,value);
-        }
-
         var response = await ScheduleItemsService.CreateScheduleItemAsync(ScheduleId, ScheduleItemForCreation);
 
         if (response.IsSuccessStatusCode)
         {
-            await OnScheduleItemCreated.InvokeAsync();
+            var scheduleItem = await response.Content.ReadFromJsonAsync<ScheduleItemDto>();
+            OnScheduleItemCreated.Invoke(scheduleItem);
             Close();
         }
         else if(response.StatusCode == HttpStatusCode.Conflict)

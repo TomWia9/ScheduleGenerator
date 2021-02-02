@@ -72,7 +72,7 @@ else
         </button>
     </div>
 
-    <CreateScheduleItemModal @ref="CreateScheduleItemModal" ScheduleId="@Id" OnScheduleItemCreated="@(async () => await LoadItems())"></CreateScheduleItemModal>
+    <CreateScheduleItemModal @ref="CreateScheduleItemModal" ScheduleId="@Id" OnScheduleItemCreated="AddItem"></CreateScheduleItemModal>
 }
 
 
