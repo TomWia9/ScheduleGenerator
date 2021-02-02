@@ -66,7 +66,7 @@ namespace ScheduleGenerator.Client.Services
         {
             User = null;
             await _localStorageService.RemoveItem("user");
-            _navigationManager.NavigateTo("");
+            _navigationManager.NavigateTo("", true);
         }
 
         public async Task<HttpResponseMessage> Register(UserForCreationDto user)

@@ -34,7 +34,7 @@ namespace ScheduleGenerator.Client.Pages
             {
                 await AuthenticationService.Login(AuthenticateRequest.Email, AuthenticateRequest.Password);
                 var returnUrl = NavigationManager.QueryString("returnUrl") ?? "/";
-                NavigationManager.NavigateTo(returnUrl);
+                NavigationManager.NavigateTo(returnUrl, true);
             }
             catch (Exception ex)
             {
