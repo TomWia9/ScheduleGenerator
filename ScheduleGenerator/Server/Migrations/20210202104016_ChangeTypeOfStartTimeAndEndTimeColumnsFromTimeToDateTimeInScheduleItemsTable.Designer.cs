@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ScheduleGenerator.Server.Models;
 
 namespace ScheduleGenerator.Server.Migrations
 {
     [DbContext(typeof(ScheduleGeneratorContext))]
-    partial class ScheduleGeneratorContextModelSnapshot : ModelSnapshot
+    [Migration("20210202104016_ChangeTypeOfStartTimeAndEndTimeColumnsFromTimeToDateTimeInScheduleItemsTable")]
+    partial class ChangeTypeOfStartTimeAndEndTimeColumnsFromTimeToDateTimeInScheduleItemsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

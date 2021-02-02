@@ -49,6 +49,8 @@
                                         <option value="@typeOfClasses">@typeOfClasses</option>
                                     }
                                 </InputSelect>
+                                <ValidationMessage For="@(() => ScheduleItemForCreation.TypeOfClasses)" />
+
                             </div>
                         </div>
 
@@ -61,15 +63,19 @@
                                         <option value="@dayOfWeek">@dayOfWeek</option>
                                     }
                                 </InputSelect>
+                                <ValidationMessage For="@(() => ScheduleItemForCreation.DayOfWeek)" />
+
                             </div>
                             <div class="form-group mb-2 text-white">
                                 <label>Start time</label>
-                                <input type="time" @bind="_startTime" min="07:00" max="20:45" required class="form-control text-white bg-dark"/>
+                                <input type="time" @bind="ScheduleItemForCreation.StartTime" min="07:00" max="20:45" required class="form-control text-white bg-dark"/>
+                                <ValidationMessage For="@(() => ScheduleItemForCreation.StartTime)" />
                             </div>
 
                             <div class="form-group mb-2 text-white">
                                 <label>End time</label>
-                                <input type="time" @bind="_endTime" min="07:15" max="21:00" required class="form-control text-white bg-dark"/>
+                                <input type="time" @bind="ScheduleItemForCreation.EndTime" min="07:15" max="21:00" required class="form-control text-white bg-dark"/>
+                                <ValidationMessage For="@(() => ScheduleItemForCreation.EndTime)" />
                             </div>
                         </div>
 
@@ -97,8 +103,6 @@
 @code {
 
     private ScheduleItemForCreationDto ScheduleItemForCreation { get; } = new();
-    private DateTime _startTime;
-    private DateTime _endTime;
 
     [Parameter]
     public EventCallback OnScheduleItemCreated { get; set; }
@@ -128,8 +132,6 @@
     private async Task AddScheduleItemAsync()
     {
         Console.WriteLine("Schedule item created");
-        ScheduleItemForCreation.StartTime = _startTime.TimeOfDay;
-        ScheduleItemForCreation.EndTime = _endTime.TimeOfDay;
 
         foreach(PropertyDescriptor descriptor in TypeDescriptor.GetProperties(ScheduleItemForCreation))
         {

@@ -35,11 +35,11 @@ namespace ScheduleGenerator.Shared.Dto
         /// <summary>
         /// The start time of classes
         /// </summary>
-        public TimeSpan StartTime { get; set; }
+        public DateTime StartTime { get; set; }
         /// <summary>
         /// The end time of classes
         /// </summary>
-        public TimeSpan EndTime { get; set; }
+        public DateTime EndTime { get; set; }
         /// <summary>
         /// The type of classes
         /// </summary>

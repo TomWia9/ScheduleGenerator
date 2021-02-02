@@ -41,14 +41,14 @@ namespace ScheduleGenerator.Shared.Dto
         [Range(typeof(TimeSpan), "7:00", "20:45",
             ErrorMessage = "The StartTime field must be between {1} and {2}")]
         [Required(AllowEmptyStrings = false)]
-        public TimeSpan StartTime { get; set; }
+        public DateTime StartTime { get; set; }
         /// <summary>
         /// The end time of classes
         /// </summary>
         [Range(typeof(TimeSpan), "7:15", "21:00",
             ErrorMessage = "The EndTime field must be between {1} and {2}")]
         [Required(AllowEmptyStrings = false)]
-        public TimeSpan EndTime { get; set; }
+        public DateTime EndTime { get; set; }
         /// <summary>
         /// The type of classes
         /// </summary>

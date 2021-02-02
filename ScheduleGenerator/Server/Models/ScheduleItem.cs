@@ -15,8 +15,8 @@ namespace ScheduleGenerator.Server.Models
         public string Lecturer { get; set; }
         [Range(0, 6)]
         public DayOfWeek DayOfWeek { get; set; }
-        public TimeSpan StartTime { get; set; }
-        public TimeSpan EndTime { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
         [Range(0, 5)]
         public TypeOfClasses TypeOfClasses { get; set; }
         [Range(0, 5)]

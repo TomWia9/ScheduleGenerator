@@ -10,8 +10,8 @@ namespace ScheduleGenerator.Shared.Dto
     {
         public ScheduleItemForCreationDto()
         {
-            StartTime = TimeSpan.Parse("07:00");
-            EndTime = TimeSpan.Parse("08:00");
+            StartTime = DateTime.Parse("2015-05-16T07:00:00");
+            EndTime = DateTime.Parse("2015-05-16T08:00:00");
         }
     }
 }
