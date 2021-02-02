@@ -1,7 +1,9 @@
 ﻿@using ScheduleGenerator.Shared.Dto
 @using ScheduleGenerator.Shared.Enums
 @using System.ComponentModel
-<div class="modal @ModalClass" tabindex="-1" role="dialog" style="display:@ModalDisplay">
+@using System.Net
+@using ScheduleGenerator.Client.Services
+<div class="modal @_modalClass" tabindex="-1" role="dialog" style="display:@_modalDisplay">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header" style="background: #121212;">
@@ -13,15 +15,10 @@
 
             <EditForm Model="@ScheduleItemForCreation" OnValidSubmit="@(async () => await AddScheduleItemAsync())">
                 <DataAnnotationsValidator />
+                
+                <div class="d-flex flex-column" style="background: #181818">
+                    <div class="modal-body d-flex justify-content-around align-items-center">
 
-                <div class="modal-body d-flex justify-content-around align-items-center" style="background: #181818">
-
-                    @if (_creationFailed)
-                    {
-                        <p class="text-danger">Creation failed</p>
-                    }
-                    else
-                    {
                         <div>
                             <div class="form-group mb-2 text-white">
                                 <label>Subject name</label>
@@ -68,21 +65,30 @@
                             </div>
                             <div class="form-group mb-2 text-white">
                                 <label>Start time</label>
-                                <input type="time" @bind="ScheduleItemForCreation.StartTime" min="07:00" max="20:45" required class="form-control text-white bg-dark"/>
+                                <input type="time" @bind="ScheduleItemForCreation.StartTime" min="07:00" max="20:45" required class="form-control text-white bg-dark" />
                                 <ValidationMessage For="@(() => ScheduleItemForCreation.StartTime)" />
                             </div>
 
                             <div class="form-group mb-2 text-white">
                                 <label>End time</label>
-                                <input type="time" @bind="ScheduleItemForCreation.EndTime" min="07:15" max="21:00" required class="form-control text-white bg-dark"/>
+                                <input type="time" @bind="ScheduleItemForCreation.EndTime" min="07:15" max="21:00" required class="form-control text-white bg-dark" />
                                 <ValidationMessage For="@(() => ScheduleItemForCreation.EndTime)" />
                             </div>
                         </div>
-
-                        
-
-                    }
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        @if (_creationFailed)
+                        {
+                            <div class="alert alert-danger">Creation failed, try again later</div>
+                        }
+                        else if (_conflict)
+                        {
+                            <div class="alert alert-warning">The created item conflicts with another item</div>
+                        }
+                    </div>
+                    
                 </div>
+                
                 <div class="modal-footer d-flex justify-content-between" style="background: #121212;">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="Close">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save changes</button>
@@ -94,7 +100,7 @@
 </div>
 
 
-@if (ShowBackdrop)
+@if (_showBackdrop)
 {
     <div class="modal-backdrop fade show"></div>
 }
@@ -102,36 +108,49 @@
 
 @code {
 
-    private ScheduleItemForCreationDto ScheduleItemForCreation { get; } = new();
+    private ScheduleItemForCreationDto ScheduleItemForCreation { get; set; } = new();
 
     [Parameter]
     public EventCallback OnScheduleItemCreated { get; set; }
 
-    public string ModalDisplay = "none;";
-    public string ModalClass = "";
-    public bool ShowBackdrop = false;
+    [Parameter]
+    public int ScheduleId { get; set; }
+
+    [Inject]
+    private IScheduleItemsService ScheduleItemsService { get; set; }
+
+    private string _modalDisplay = "none;";
+    private string _modalClass = "";
+    private bool _showBackdrop = false;
 
     private bool _creationFailed = false;
+    private bool _conflict = false;
 
     public void Open()
     {
-        ModalDisplay = "block;";
-        ModalClass = "Show";
-        ShowBackdrop = true;
+        _modalDisplay = "block;";
+        _modalClass = "Show";
+        _showBackdrop = true;
+
+        ScheduleItemForCreation = new ScheduleItemForCreationDto();
+        _creationFailed = false;
+        _conflict = false;
+
         StateHasChanged();
     }
 
-    public void Close()
+    private void Close()
     {
-        ModalDisplay = "none";
-        ModalClass = "";
-        ShowBackdrop = false;
+        _modalDisplay = "none";
+        _modalClass = "";
+        _showBackdrop = false;
         StateHasChanged();
     }
 
     private async Task AddScheduleItemAsync()
     {
         Console.WriteLine("Schedule item created");
+        Console.WriteLine("schedule id: " + ScheduleId);
 
         foreach(PropertyDescriptor descriptor in TypeDescriptor.GetProperties(ScheduleItemForCreation))
         {
@@ -140,9 +159,21 @@
             Console.WriteLine("{0}={1}",name,value);
         }
 
-        Console.WriteLine(ScheduleItemForCreation.Subject);
-        await OnScheduleItemCreated.InvokeAsync();
-        Close();
+        var response = await ScheduleItemsService.CreateScheduleItemAsync(ScheduleId, ScheduleItemForCreation);
+
+        if (response.IsSuccessStatusCode)
+        {
+            await OnScheduleItemCreated.InvokeAsync();
+            Close();
+        }
+        else if(response.StatusCode == HttpStatusCode.Conflict)
+        {
+            _conflict = true;
+        }
+        else
+        {
+            _creationFailed = true;
+        }
     }
 
 }

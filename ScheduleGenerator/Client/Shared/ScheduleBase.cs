@@ -29,6 +29,11 @@ namespace ScheduleGenerator.Client.Shared
 
         protected override async Task OnParametersSetAsync()
         {
+            await LoadItems();
+        }
+
+        protected async Task LoadItems()
+        {
             var response = await ScheduleItemsService.GetScheduleItemsAsync(Id);
             if (!response.IsSuccessStatusCode)
             {
@@ -40,18 +45,5 @@ namespace ScheduleGenerator.Client.Shared
             }
         }
 
-        protected async Task HandleValidSubmit()
-        {
-            Loading = true;
-            try
-            {
-                Console.WriteLine("Schedule created");
-                Loading = false;
-            }
-            catch (Exception ex)
-            {
-              
-            }
-        }
     }
 }
