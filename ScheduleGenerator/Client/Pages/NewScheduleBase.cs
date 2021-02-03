@@ -19,6 +19,8 @@ namespace ScheduleGenerator.Client.Pages
 
         [Inject]
         private NavigationManager NavigationManager { get; set; }
+        [Inject]
+        private AppState AppState { get; set; }
         protected ScheduleForCreationDto ScheduleForCreation { get; set; } = new();
         protected bool Conflict { get; set; }
         protected bool CreationFailed { get; set; }
@@ -39,9 +41,9 @@ namespace ScheduleGenerator.Client.Pages
             if (response.IsSuccessStatusCode)
             {
                 var schedule = await response.Content.ReadFromJsonAsync<ScheduleDto>();
+                AppState.AddSchedule(schedule);
                 
-                //TODO Add schedule to AppState
-                NavigationManager.NavigateTo($"schedules/{schedule.Id}");
+                NavigationManager.NavigateTo($"schedules/{schedule!.Id}");
             }
             else if (response.StatusCode == HttpStatusCode.Conflict)
             {

@@ -2,6 +2,8 @@
 @using ScheduleGenerator.Shared.Dto
 @inject IAuthenticationService AuthenticationService
 @inject ISchedulesService SchedulesService
+@inject AppState AppState
+@implements IDisposable
 
 <div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">Schedule Generator</a>
@@ -28,10 +30,10 @@
             </NavLink>
         </li>
     </ul>
-    
+
     @if (AuthenticationService.IsUserLoggedIn())
     {
-        <hr class="bg-white"/>
+        <hr class="bg-white" />
         <ul class="nav flex-column">
             @if (loading)
             {
@@ -52,7 +54,7 @@
                         </div>
                     </li>
                 }
-                else if (!_schedules.Any())
+                else if (!AppState.Schedules.Any())
                 {
                     <li class="nav-item px-3">
                         <div class="d-flex align-items-center text-white">
@@ -62,7 +64,7 @@
                 }
                 else
                 {
-                    @foreach (var schedule in _schedules)
+                    @foreach (var schedule in AppState.Schedules)
                     {
                         var href = "schedules/" + schedule.Id;
                         <li class="nav-item px-3">
@@ -87,8 +89,6 @@
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    private IEnumerable<ScheduleDto> _schedules = new List<ScheduleDto>();
-
     protected override async Task OnInitializedAsync()
     {
         @if (AuthenticationService.IsUserLoggedIn())
@@ -99,7 +99,8 @@
 
             if (response.IsSuccessStatusCode)
             {
-                _schedules = await response.Content.ReadFromJsonAsync<IEnumerable<ScheduleDto>>();
+                var schedules = await response.Content.ReadFromJsonAsync<IEnumerable<ScheduleDto>>();
+                AppState.Schedules = schedules!.ToList();
             }
             else
             {
@@ -107,6 +108,8 @@
             }
 
             loading = false;
+
+            AppState.OnScheduleAdded += StateHasChanged;
         }
     }
 
@@ -114,4 +117,10 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
+
+    public void Dispose()
+    {
+        AppState.OnScheduleAdded -= StateHasChanged;
+    }
 }
+
