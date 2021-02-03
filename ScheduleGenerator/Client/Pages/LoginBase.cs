@@ -10,12 +10,12 @@ namespace ScheduleGenerator.Client.Pages
     public class LoginBase : ComponentBase
     {
         [Inject]
-        protected NavigationManager NavigationManager { get; set; }
+        private NavigationManager NavigationManager { get; set; }
 
         [Inject]
-        protected IAuthenticationService AuthenticationService { get; set; }
+        private IAuthenticationService AuthenticationService { get; set; }
 
-        protected AuthenticateRequest AuthenticateRequest = new();
+        protected readonly AuthenticateRequest AuthenticateRequest = new();
         protected bool Loading;
         protected string Error;
 
@@ -24,7 +24,7 @@ namespace ScheduleGenerator.Client.Pages
             // redirect to home if already logged in
             if (AuthenticationService.IsUserLoggedIn())
             {
-                NavigationManager.NavigateTo("");
+                NavigationManager.NavigateTo("", true);
             }
         }
         protected async Task HandleValidSubmit()

@@ -11,17 +11,17 @@
         <div class="card-body" style="background: #181818">
             <div class="form-group text-white">
                 <label>Email</label>
-                <InputText @bind-Value="UserForCreation.Email" class="form-control bg-dark" />
+                <InputText @bind-Value="UserForCreation.Email" class="form-control bg-dark text-white" />
                 <ValidationMessage For="@(() => UserForCreation.Email)" />
             </div>
             <div class="form-group text-white">
                 <label>Password</label>
-                <InputText @bind-Value="UserForCreation.Password" type="password" class="form-control bg-dark" />
+                <InputText @bind-Value="UserForCreation.Password" type="password" class="form-control bg-dark text-white" />
                 <ValidationMessage For="@(() => UserForCreation.Password)" />
             </div>
             <div class="form-group text-white">
                 <label>Confirm password</label>
-                <InputText @bind-Value="UserForCreation.ConfirmPassword" type="password" class="form-control bg-dark" />
+                <InputText @bind-Value="UserForCreation.ConfirmPassword" type="password" class="form-control bg-dark text-white" />
                 <ValidationMessage For="@(() => UserForCreation.ConfirmPassword)" />
             </div>
 
@@ -37,7 +37,7 @@
             {
                 <div class="alert alert-success mt-3 mb-0">Successfully registered, you can login now</div>
             }
-            @if (UsernameConflict)
+            @if (EmailConflict)
             {
                 <div class="alert alert-warning mt-3 mb-0">The given email is already taken</div>
             }

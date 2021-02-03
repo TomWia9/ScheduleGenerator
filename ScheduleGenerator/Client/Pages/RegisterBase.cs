@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using ScheduleGenerator.Client.Helpers.ExtensionMethods;
 using ScheduleGenerator.Client.Services;
 using ScheduleGenerator.Shared.Dto;
 
@@ -10,23 +11,23 @@ namespace ScheduleGenerator.Client.Pages
     public class RegisterBase : ComponentBase
     {
         [Inject]
-        protected IAuthenticationService AuthenticationService { get; set; }
+        private IAuthenticationService AuthenticationService { get; set; }
 
-        [Inject]
-        protected NavigationManager NavigationManager { get; set; }
+        [Inject] 
+        private NavigationManager NavigationManager { get; set; }
 
-        protected UserForCreationDto UserForCreation = new();
+        protected readonly UserForCreationDto UserForCreation = new();
         protected bool Loading;
         protected string Error;
         protected bool? RegisterFailed;
-        protected bool UsernameConflict;
+        protected bool EmailConflict;
 
         protected override void OnInitialized()
         {
             // redirect to home if already logged in
             if (AuthenticationService.User != null)
             {
-                NavigationManager.NavigateTo("");
+                NavigationManager.NavigateTo("", true);
             }
         }
 
@@ -39,21 +40,24 @@ namespace ScheduleGenerator.Client.Pages
 
                 if (response.StatusCode == HttpStatusCode.Conflict)
                 {
-                    UsernameConflict = true;
+                    EmailConflict = true;
                     RegisterFailed = null;
                 }
 
                 else if (!response.IsSuccessStatusCode && response.StatusCode != HttpStatusCode.Conflict)
                 {
                     RegisterFailed = true;
-                    UsernameConflict = false;
+                    EmailConflict = false;
 
                 }
 
                 else
                 {
                     RegisterFailed = false;
-                    UsernameConflict = false;
+                    EmailConflict = false;
+                    await AuthenticationService.Login(UserForCreation.Email, UserForCreation.Password);
+                    var returnUrl = NavigationManager.QueryString("returnUrl") ?? "/";
+                    NavigationManager.NavigateTo(returnUrl, true);
                 }
 
                 Loading = false;

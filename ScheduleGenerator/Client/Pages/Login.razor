@@ -11,12 +11,12 @@
 
         <div class="form-group text-white">
             <label>Email</label>
-            <InputText @bind-Value="AuthenticateRequest.Email" class="form-control bg-dark"/>
+            <InputText @bind-Value="AuthenticateRequest.Email" class="form-control bg-dark text-white"/>
             <ValidationMessage For="@(() => AuthenticateRequest.Email)"/>
         </div>
         <div class="form-group text-white">
             <label>Password</label>
-            <InputText @bind-Value="AuthenticateRequest.Password" type="password" class="form-control bg-dark"/>
+            <InputText @bind-Value="AuthenticateRequest.Password" type="password" class="form-control bg-dark text-white"/>
             <ValidationMessage For="@(() => AuthenticateRequest.Password)"/>
         </div>
         @if (!string.IsNullOrEmpty(Error))
