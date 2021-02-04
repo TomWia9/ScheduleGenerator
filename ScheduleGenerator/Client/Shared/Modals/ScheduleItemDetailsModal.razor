@@ -1,0 +1,106 @@
+﻿@using ScheduleGenerator.Shared.Dto
+
+<div class="modal @_modalClass" tabindex="-1" role="dialog" style="display:@_modalDisplay">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #121212;">
+                <h5 class="modal-title text-white">Details</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" @onclick="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body d-flex flex-column justify-content-around align-items-center" style="background: #181818">
+                
+                @if (_loadFailed)
+                {
+                    <div class="alert alert-danger w-100">Failed to load details, try again later</div>
+                }
+                else
+                {
+                    <h4>@ScheduleItem.Subject</h4>
+                    <h5>@($"{ScheduleItem.StartTime.TimeOfDay.Hours:00}:{ScheduleItem.StartTime.TimeOfDay.Minutes:00}") - @($"{ScheduleItem.EndTime.TimeOfDay.Hours:00}:{ScheduleItem.EndTime.TimeOfDay.Minutes:00}")</h5>
+                    <div class="alert alert-dark w-75 text-center h5 font-weight-bold">@ScheduleItem.DayOfWeek</div>
+                    @if (ScheduleItem.RoomNumber != null)
+                    {
+                        <div class="w-75">
+                            <label>Room number</label>
+                            <div class="alert alert-dark">@ScheduleItem.RoomNumber</div>
+                        </div>
+                    }
+                   @if (ScheduleItem.Lecturer != null)
+                   {
+                       <div class="w-75">
+                           <label>Lecturer</label>
+                           <div class="alert alert-dark">@ScheduleItem.Lecturer</div>
+                       </div>
+                   }
+                   
+                    <div class="w-75">
+                        <label>Type</label>
+                        <div class="alert alert-dark">@ScheduleItem.TypeOfClasses</div>
+                    </div>
+                    
+                }
+
+            </div>
+
+                <div class="modal-footer d-flex justify-content-between" style="background: #121212;">
+                    <button type="button" class="btn btn-secondary w-25" data-dismiss="modal" @onclick="Close">Close</button>
+                    <button type="button" class="btn btn-primary w-25" @onclick="Edit">Edit</button>
+                    <button type="button" class="btn btn-danger w-25" @onclick="Delete">Delete</button>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+
+@if (_showBackdrop)
+{
+    <div class="modal-backdrop fade show"></div>
+}
+
+
+@code {
+
+    [Parameter]
+    public ScheduleItemDto ScheduleItem { get; set; }
+
+    private string _modalDisplay = "none;";
+    private string _modalClass = "";
+    private bool _showBackdrop = false;
+
+    private bool _loadFailed = false;
+
+    public void Open()
+    {
+        Console.WriteLine(ScheduleItem.Subject);
+
+        _modalDisplay = "block;";
+        _modalClass = "Show";
+        _showBackdrop = true;
+
+        _loadFailed = ScheduleItem == null;
+
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        _modalDisplay = "none";
+        _modalClass = "";
+        _showBackdrop = false;
+        StateHasChanged();
+    }
+
+    private void Edit()
+    {
+       
+    }
+
+    private void Delete()
+    {
+       
+    }
+}

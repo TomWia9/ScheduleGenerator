@@ -1,14 +1,19 @@
 ﻿@using ScheduleGenerator.Shared.Dto
 
-<div role="button" class="card @string.Concat("bg-", Item.Color.ToString().ToLower()) my-2" style="width: 12rem; height: 9.5rem; cursor: pointer;">
+<div role="button" class="card @string.Concat("bg-", Item.Color.ToString().ToLower()) my-2" style="width: 12rem; height: 9.5rem; cursor: pointer;" @onclick="() => _scheduleItemDetailsModal.Open()">
     <div class="card-body">
         <h5 class="card-title">@($"{Item.StartTime.TimeOfDay.Hours:00}:{Item.StartTime.TimeOfDay.Minutes:00}") - @($"{Item.EndTime.TimeOfDay.Hours:00}:{Item.EndTime.TimeOfDay.Minutes:00}")</h5>
         <h6 class="card-subtitle mb-2">@Item.Subject</h6>
     </div>
 </div>
 
+<ScheduleItemDetailsModal @ref="_scheduleItemDetailsModal" ScheduleItem="@Item"></ScheduleItemDetailsModal>
+
+
 @code {
 
     [Parameter]
     public ScheduleItemDto Item { get; set; }
+    private ScheduleItemDetailsModal _scheduleItemDetailsModal;
+
 }
