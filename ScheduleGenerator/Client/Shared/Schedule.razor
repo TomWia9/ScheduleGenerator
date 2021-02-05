@@ -25,31 +25,31 @@ else
     <div class="d-flex justify-content-around mb-2" style="overflow-y: auto; height: 550px">
 
         <div class="text-white">
-            @foreach (var item in Items.Where(i => i.DayOfWeek == DayOfWeek.Monday))
+            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == DayOfWeek.Monday))
             {
                 <ScheduleItem Item="item"></ScheduleItem>
             }
         </div>
         <div class="text-white">
-            @foreach (var item in Items.Where(i => i.DayOfWeek == DayOfWeek.Tuesday))
+            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == DayOfWeek.Tuesday))
             {
                 <ScheduleItem Item="item"></ScheduleItem>
             }
         </div>
         <div class="text-white">
-            @foreach (var item in Items.Where(i => i.DayOfWeek == DayOfWeek.Wednesday))
+            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == DayOfWeek.Wednesday))
             {
                 <ScheduleItem Item="item"></ScheduleItem>
             }
         </div>
         <div class="text-white">
-            @foreach (var item in Items.Where(i => i.DayOfWeek == DayOfWeek.Thursday))
+            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == DayOfWeek.Thursday))
             {
                 <ScheduleItem Item="item"></ScheduleItem>
             }
         </div>
         <div class="text-white">
-            @foreach (var item in Items.Where(i => i.DayOfWeek == DayOfWeek.Friday))
+            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == DayOfWeek.Friday))
             {
                 <ScheduleItem Item="item"></ScheduleItem>
             }
@@ -72,7 +72,7 @@ else
         </button>
     </div>
 
-    <CreateScheduleItemModal @ref="CreateScheduleItemModal" ScheduleId="@Id" OnScheduleItemCreated="AddItem"></CreateScheduleItemModal>
+    <CreateScheduleItemModal @ref="CreateScheduleItemModal" ScheduleId="@Id"></CreateScheduleItemModal>
 }
 
 

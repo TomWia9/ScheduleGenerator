@@ -20,7 +20,7 @@
                 {
                     if (_showEdit)
                     {
-                        <EditScheduleItem OnCanceled="@(() => _showEdit = !_showEdit)" OnScheduleItemUpdated="@(async () => await Update())" ScheduleItem="@ScheduleItem"></EditScheduleItem>
+                        <EditScheduleItem OnCanceled="@(() => _showEdit = !_showEdit)" OnScheduleItemUpdated="Close" ScheduleItem="@ScheduleItem"></EditScheduleItem>
                     }
                     else
                     {
@@ -106,11 +106,6 @@
         _modalClass = "";
         _showBackdrop = false;
         StateHasChanged();
-    }
-
-    private async Task Update()
-    {
-        Close();
     }
 
     private void Delete()

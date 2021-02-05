@@ -29,6 +29,7 @@ namespace ScheduleGenerator.Client
             builder.Services.AddScoped<IHttpService, HttpService>();
 
             builder.Services.AddSingleton<SchedulesState>();
+            builder.Services.AddSingleton<ScheduleItemsState>();
 
             var host = builder.Build();
 

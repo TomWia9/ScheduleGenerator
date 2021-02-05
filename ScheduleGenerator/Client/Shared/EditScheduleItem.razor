@@ -1,4 +1,5 @@
 ﻿@inject IScheduleItemsService ScheduleItemsService
+@inject ScheduleItemsState ScheduleItemsState
 @using ScheduleGenerator.Shared.Dto
 @using ScheduleGenerator.Client.Services
 @using System.Net
@@ -124,7 +125,9 @@
 
         if (response.IsSuccessStatusCode)
         {
-            //TODO add to itemsState (first create ItemsState
+            var updatedItemResponse = await ScheduleItemsService.GetScheduleItemAsync(ScheduleItem.ScheduleId, ScheduleItem.Id);
+            var updatedScheduleItem = await updatedItemResponse.Content.ReadFromJsonAsync<ScheduleItemDto>();
+            ScheduleItemsState.UpdateScheduleItem(updatedScheduleItem);
             await OnScheduleItemUpdated.InvokeAsync();
 
         }

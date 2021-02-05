@@ -12,25 +12,27 @@ using ScheduleGenerator.Shared.Enums;
 
 namespace ScheduleGenerator.Client.Shared
 {
-    public class ScheduleBase : ComponentBase
+    public class ScheduleBase : ComponentBase, IDisposable
     {
         [Parameter]
         public int Id { get; set; }
 
         [Inject]
         private IScheduleItemsService ScheduleItemsService { get; set; }
-        
-        protected ScheduleForCreationDto ScheduleForCreation = new();
+
+        [Inject]
+        protected ScheduleItemsState ScheduleItemsState { get; set; }
+
+        //protected ScheduleForCreationDto ScheduleForCreation = new();
         protected CreateScheduleItemModal CreateScheduleItemModal;
 
-        protected IEnumerable<ScheduleItemDto> Items = new List<ScheduleItemDto>();
-        
         protected bool Loading;
         protected bool LoadFailed;
 
         protected override async Task OnParametersSetAsync()
         {
             await LoadItems();
+            ScheduleItemsState.OnScheduleItemModified += StateHasChanged;
         }
 
         private async Task LoadItems()
@@ -43,19 +45,17 @@ namespace ScheduleGenerator.Client.Shared
             }
             else
             {
-                Items = await response.Content.ReadFromJsonAsync<IEnumerable<ScheduleItemDto>>();
+                var items = await response.Content.ReadFromJsonAsync<IEnumerable<ScheduleItemDto>>();
+
+                ScheduleItemsState.ScheduleItems = items!.ToList();
             }
             Loading = false;
 
         }
 
-        protected void AddItem(ScheduleItemDto scheduleItem)
+        public void Dispose()
         {
-            if (scheduleItem == null) return;
-            var scheduleItems = Items.ToList();
-            scheduleItems.Add(scheduleItem);
-            Items = scheduleItems;
-            StateHasChanged();
+            ScheduleItemsState.OnScheduleItemModified -= StateHasChanged;
         }
     }
 }
