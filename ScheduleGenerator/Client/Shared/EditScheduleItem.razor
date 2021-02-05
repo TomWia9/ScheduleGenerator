@@ -1,8 +1,10 @@
 ﻿@inject IScheduleItemsService ScheduleItemsService
 @inject ScheduleItemsState ScheduleItemsState
+@inject IMapper Mapper
 @using ScheduleGenerator.Shared.Dto
 @using ScheduleGenerator.Client.Services
 @using System.Net
+@using AutoMapper
 @using ScheduleGenerator.Shared.Enums
 
 <EditForm Model="@_scheduleItemForUpdate" OnValidSubmit="@(async () => await EditScheduleItemAsync())">
@@ -105,18 +107,7 @@
 
     protected override void OnInitialized()
     {
-        MapScheduleItemToScheduleItemForUpdate();
-    }
-
-    private void MapScheduleItemToScheduleItemForUpdate()
-    {
-        _scheduleItemForUpdate.Subject = ScheduleItem.Subject;
-        _scheduleItemForUpdate.RoomNumber = ScheduleItem.RoomNumber;
-        _scheduleItemForUpdate.Lecturer = ScheduleItem.Lecturer;
-        _scheduleItemForUpdate.DayOfWeek = ScheduleItem.DayOfWeek;
-        _scheduleItemForUpdate.StartTime = ScheduleItem.StartTime;
-        _scheduleItemForUpdate.EndTime = ScheduleItem.EndTime;
-        _scheduleItemForUpdate.TypeOfClasses = ScheduleItem.TypeOfClasses;
+        Mapper.Map(ScheduleItem, _scheduleItemForUpdate);
     }
 
     private async Task EditScheduleItemAsync()
