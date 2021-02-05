@@ -2,7 +2,7 @@
 @using ScheduleGenerator.Shared.Dto
 @inject IAuthenticationService AuthenticationService
 @inject ISchedulesService SchedulesService
-@inject AppState AppState
+@inject SchedulesState SchedulesState
 @implements IDisposable
 
 <div class="top-row pl-4 navbar navbar-dark">
@@ -54,7 +54,7 @@
                         </div>
                     </li>
                 }
-                else if (!AppState.Schedules.Any())
+                else if (!SchedulesState.Schedules.Any())
                 {
                     <li class="nav-item px-3">
                         <div class="d-flex align-items-center text-white">
@@ -64,7 +64,7 @@
                 }
                 else
                 {
-                    @foreach (var schedule in AppState.Schedules)
+                    @foreach (var schedule in SchedulesState.Schedules)
                     {
                         var href = "schedules/" + schedule.Id;
                         <li class="nav-item px-3">
@@ -100,7 +100,7 @@
             if (response.IsSuccessStatusCode)
             {
                 var schedules = await response.Content.ReadFromJsonAsync<IEnumerable<ScheduleDto>>();
-                AppState.Schedules = schedules!.ToList();
+                SchedulesState.Schedules = schedules!.ToList();
             }
             else
             {
@@ -109,7 +109,7 @@
 
             loading = false;
 
-            AppState.OnScheduleAdded += StateHasChanged;
+            SchedulesState.OnScheduleAdded += StateHasChanged;
         }
     }
 
@@ -120,7 +120,7 @@
 
     public void Dispose()
     {
-        AppState.OnScheduleAdded -= StateHasChanged;
+        SchedulesState.OnScheduleAdded -= StateHasChanged;
     }
 }
 

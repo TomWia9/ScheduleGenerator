@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using ScheduleGenerator.Client.Services;
+using ScheduleGenerator.Client.Shared;
 
 namespace ScheduleGenerator.Client
 {
@@ -27,7 +28,7 @@ namespace ScheduleGenerator.Client
             builder.Services.AddScoped<IScheduleItemsService, ScheduleItemsService>();
             builder.Services.AddScoped<IHttpService, HttpService>();
 
-            builder.Services.AddSingleton<AppState>();
+            builder.Services.AddSingleton<SchedulesState>();
 
             var host = builder.Build();
 

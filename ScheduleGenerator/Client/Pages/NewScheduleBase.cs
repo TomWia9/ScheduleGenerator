@@ -6,6 +6,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using ScheduleGenerator.Client.Services;
+using ScheduleGenerator.Client.Shared;
 using ScheduleGenerator.Shared.Dto;
 
 namespace ScheduleGenerator.Client.Pages
@@ -20,7 +21,7 @@ namespace ScheduleGenerator.Client.Pages
         [Inject]
         private NavigationManager NavigationManager { get; set; }
         [Inject]
-        private AppState AppState { get; set; }
+        private SchedulesState SchedulesState { get; set; }
         protected ScheduleForCreationDto ScheduleForCreation { get; set; } = new();
         protected bool Conflict { get; set; }
         protected bool CreationFailed { get; set; }
@@ -41,7 +42,7 @@ namespace ScheduleGenerator.Client.Pages
             if (response.IsSuccessStatusCode)
             {
                 var schedule = await response.Content.ReadFromJsonAsync<ScheduleDto>();
-                AppState.AddSchedule(schedule);
+                SchedulesState.AddSchedule(schedule);
                 
                 NavigationManager.NavigateTo($"schedules/{schedule!.Id}");
             }

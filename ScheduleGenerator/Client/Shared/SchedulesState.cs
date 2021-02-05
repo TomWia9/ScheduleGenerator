@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ScheduleGenerator.Shared.Dto;
 
-namespace ScheduleGenerator.Client.Services
+namespace ScheduleGenerator.Client.Shared
 {
-    public class AppState
+    public class SchedulesState
     {
         public IList<ScheduleDto> Schedules = new List<ScheduleDto>();
 
