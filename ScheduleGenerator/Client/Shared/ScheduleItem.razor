@@ -1,4 +1,6 @@
 ﻿@using ScheduleGenerator.Shared.Dto
+@using ScheduleGenerator.Client.Services
+@inject IScheduleItemsService ScheduleItemsService
 
 <div role="button" class="card @string.Concat("bg-", Item.Color.ToString().ToLower()) my-2" style="width: 12rem; height: 9.5rem; cursor: pointer;" @onclick="() => _scheduleItemDetailsModal.Open()">
     <div class="card-body">
@@ -14,6 +16,7 @@
 
     [Parameter]
     public ScheduleItemDto Item { get; set; }
+
     private ScheduleItemDetailsModal _scheduleItemDetailsModal;
 
 }

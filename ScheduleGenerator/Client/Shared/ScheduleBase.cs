@@ -57,6 +57,5 @@ namespace ScheduleGenerator.Client.Shared
             Items = scheduleItems;
             StateHasChanged();
         }
-
     }
 }

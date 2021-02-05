@@ -18,38 +18,49 @@
                 }
                 else
                 {
-                    <h4>@ScheduleItem.Subject</h4>
-                    <h5>@($"{ScheduleItem.StartTime.TimeOfDay.Hours:00}:{ScheduleItem.StartTime.TimeOfDay.Minutes:00}") - @($"{ScheduleItem.EndTime.TimeOfDay.Hours:00}:{ScheduleItem.EndTime.TimeOfDay.Minutes:00}")</h5>
-                    <div class="alert alert-dark w-75 text-center h5 font-weight-bold">@ScheduleItem.DayOfWeek</div>
-                    @if (ScheduleItem.RoomNumber != null)
+                    if (_showEdit)
                     {
+                        <EditScheduleItem OnCanceled="@(() => _showEdit = !_showEdit)" OnScheduleItemUpdated="@(async () => await Update())" ScheduleItem="@ScheduleItem"></EditScheduleItem>
+                    }
+                    else
+                    {
+                        <h4>@ScheduleItem.Subject</h4>
+                        <h5>@($"{ScheduleItem.StartTime.TimeOfDay.Hours:00}:{ScheduleItem.StartTime.TimeOfDay.Minutes:00}") - @($"{ScheduleItem.EndTime.TimeOfDay.Hours:00}:{ScheduleItem.EndTime.TimeOfDay.Minutes:00}")</h5>
+                        <div class="alert alert-dark w-75 text-center h5 font-weight-bold">@ScheduleItem.DayOfWeek</div>
+                        @if (ScheduleItem.RoomNumber != null)
+                        {
+                            <div class="w-75">
+                                <label>Room number</label>
+                                <div class="alert alert-dark">@ScheduleItem.RoomNumber</div>
+                            </div>
+                        }
+                        @if (ScheduleItem.Lecturer != null)
+                        {
+                            <div class="w-75">
+                                <label>Lecturer</label>
+                                <div class="alert alert-dark">@ScheduleItem.Lecturer</div>
+                            </div>
+                        }
+                   
                         <div class="w-75">
-                            <label>Room number</label>
-                            <div class="alert alert-dark">@ScheduleItem.RoomNumber</div>
+                            <label>Type</label>
+                            <div class="alert alert-dark">@ScheduleItem.TypeOfClasses</div>
                         </div>
                     }
-                   @if (ScheduleItem.Lecturer != null)
-                   {
-                       <div class="w-75">
-                           <label>Lecturer</label>
-                           <div class="alert alert-dark">@ScheduleItem.Lecturer</div>
-                       </div>
-                   }
                    
-                    <div class="w-75">
-                        <label>Type</label>
-                        <div class="alert alert-dark">@ScheduleItem.TypeOfClasses</div>
-                    </div>
                     
                 }
 
             </div>
-
+            
+            @if (!_showEdit)
+            {
                 <div class="modal-footer d-flex justify-content-between" style="background: #121212;">
                     <button type="button" class="btn btn-secondary w-25" data-dismiss="modal" @onclick="Close">Close</button>
-                    <button type="button" class="btn btn-primary w-25" @onclick="Edit">Edit</button>
+                    <button type="button" class="btn btn-primary w-25" @onclick="@(() => _showEdit = !_showEdit)">Edit</button>
                     <button type="button" class="btn btn-danger w-25" @onclick="Delete">Delete</button>
                 </div>
+            }
 
         </div>
     </div>
@@ -72,10 +83,13 @@
     private bool _showBackdrop = false;
 
     private bool _loadFailed = false;
+    private bool _showEdit = false;
 
     public void Open()
     {
         Console.WriteLine(ScheduleItem.Subject);
+        _showEdit = false;
+        _loadFailed = false;
 
         _modalDisplay = "block;";
         _modalClass = "Show";
@@ -94,13 +108,13 @@
         StateHasChanged();
     }
 
-    private void Edit()
+    private async Task Update()
     {
-       
+        Close();
     }
 
     private void Delete()
     {
-       
+
     }
 }
