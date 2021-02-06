@@ -27,6 +27,15 @@ namespace ScheduleGenerator.Client.Shared
             NotifyStateChanged();
         }
 
+        public void DeleteScheduleItem(int id)
+        {
+            var scheduleItemToDelete = ScheduleItems.Single(i => i.Id == id);
+
+            ScheduleItems.Remove(scheduleItemToDelete);
+
+            NotifyStateChanged();
+        }
+
         private void NotifyStateChanged() => OnScheduleItemModified?.Invoke();
 
     }

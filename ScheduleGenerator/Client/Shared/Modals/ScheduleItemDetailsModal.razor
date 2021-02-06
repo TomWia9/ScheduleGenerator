@@ -1,4 +1,9 @@
 ﻿@using ScheduleGenerator.Shared.Dto
+@using ScheduleGenerator.Client.Helpers.ExtensionMethods
+@using ScheduleGenerator.Client.Services
+@inject IJSRuntime Js
+@inject ScheduleItemsState ScheduleItemsState
+@inject IScheduleItemsService ScheduleItemsService
 
 <div class="modal @_modalClass" tabindex="-1" role="dialog" style="display:@_modalDisplay">
     <div class="modal-dialog" role="document">
@@ -11,10 +16,14 @@
             </div>
 
             <div class="modal-body d-flex flex-column justify-content-around align-items-center" style="background: #181818">
-                
+
                 @if (_loadFailed)
                 {
                     <div class="alert alert-danger w-100">Failed to load details, try again later</div>
+                }
+                else if (_deleteFailed)
+                {
+                    <div class="alert alert-danger w-100">Failed to delete, try again later</div>
                 }
                 else
                 {
@@ -41,24 +50,24 @@
                                 <div class="alert alert-dark">@ScheduleItem.Lecturer</div>
                             </div>
                         }
-                   
+
                         <div class="w-75">
                             <label>Type</label>
                             <div class="alert alert-dark">@ScheduleItem.TypeOfClasses</div>
                         </div>
                     }
-                   
-                    
+
+
                 }
 
             </div>
-            
+
             @if (!_showEdit)
             {
                 <div class="modal-footer d-flex justify-content-between" style="background: #121212;">
                     <button type="button" class="btn btn-secondary w-25" data-dismiss="modal" @onclick="Close">Close</button>
                     <button type="button" class="btn btn-primary w-25" @onclick="@(() => _showEdit = !_showEdit)">Edit</button>
-                    <button type="button" class="btn btn-danger w-25" @onclick="Delete">Delete</button>
+                    <button type="button" class="btn btn-danger w-25" @onclick="@(async () => await DeleteScheduleItem())">Delete</button>
                 </div>
             }
 
@@ -83,13 +92,14 @@
     private bool _showBackdrop = false;
 
     private bool _loadFailed = false;
+    private bool _deleteFailed = false;
     private bool _showEdit = false;
 
     public void Open()
     {
-        Console.WriteLine(ScheduleItem.Subject);
         _showEdit = false;
         _loadFailed = false;
+        _deleteFailed = false;
 
         _modalDisplay = "block;";
         _modalClass = "Show";
@@ -108,8 +118,20 @@
         StateHasChanged();
     }
 
-    private void Delete()
+    private async Task DeleteScheduleItem()
     {
+        if (await Js.Confirm($"Remove {ScheduleItem.Subject} from the schedule?"))
+        {
+            var response = await ScheduleItemsService.DeleteScheduleItemAsync(ScheduleItem.ScheduleId, ScheduleItem.Id);
 
+            if (response.IsSuccessStatusCode)
+            {
+                ScheduleItemsState.DeleteScheduleItem(ScheduleItem.Id);
+            }
+            else
+            {
+                _deleteFailed = true;
+            }
+        }
     }
 }
