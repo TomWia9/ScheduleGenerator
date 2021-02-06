@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,7 @@ using ScheduleGenerator.Server.Helpers;
 using ScheduleGenerator.Server.Models;
 using ScheduleGenerator.Server.Repositories;
 using Serilog;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace ScheduleGenerator.Server
 {
@@ -61,6 +63,11 @@ namespace ScheduleGenerator.Server
                     new ProducesResponseTypeAttribute(StatusCodes.Status500InternalServerError));
 
                 options.OutputFormatters.Add(new Microsoft.AspNetCore.Mvc.Formatters.XmlSerializerOutputFormatter());
+
+            }).AddFluentValidation(options =>
+            {
+                options.RegisterValidatorsFromAssemblyContaining<Startup>();
+                options.ValidatorOptions.LanguageManager.Enabled = false;
             });
 
             services.AddDbContext<ScheduleGeneratorContext>(options =>
@@ -134,6 +141,9 @@ namespace ScheduleGenerator.Server
                 {
                     setupAction.IncludeXmlComments(d);
                 }
+
+                setupAction.AddFluentValidationRules();
+
             });
 
             var key = Encoding.UTF8.GetBytes(Configuration.GetValue<string>("AppSettings:Secret"));
