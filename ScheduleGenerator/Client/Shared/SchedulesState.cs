@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ScheduleGenerator.Shared.Dto;
 
 namespace ScheduleGenerator.Client.Shared
@@ -8,7 +9,7 @@ namespace ScheduleGenerator.Client.Shared
     {
         public IList<ScheduleDto> Schedules = new List<ScheduleDto>();
 
-        public event Action OnScheduleAdded;
+        public event Action OnScheduleModified;
 
         public void AddSchedule(ScheduleDto schedule)
         {
@@ -16,7 +17,16 @@ namespace ScheduleGenerator.Client.Shared
             NotifyStateChanged();
         }
 
-        private void NotifyStateChanged() => OnScheduleAdded?.Invoke();
+        public void DeleteSchedule(int id)
+        {
+            var scheduleToDelete = Schedules.Single(s => s.Id == id);
+
+            Schedules.Remove(scheduleToDelete);
+
+            NotifyStateChanged();
+        }
+
+        private void NotifyStateChanged() => OnScheduleModified?.Invoke();
 
     }
 }

@@ -12,6 +12,10 @@ else if (LoadFailed)
 {
     <div class="alert alert-danger mt-3 mb-0">Failed to load items, try again later</div>
 }
+else if (DeleteFailed)
+{
+    <div class="alert alert-danger mt-3 mb-0">Failed to delete schedule, try again later</div>
+}
 else
 {
     <div class="sticky-top d-flex justify-content-md-around mb-2 text-white w-100 border-bottom border-white">
@@ -60,15 +64,11 @@ else
         <button class="btn btn-primary mt-3 w-25" @onclick="() => CreateScheduleItemModal.Open()" type="button">
             Add item
         </button>
-        <button class="btn btn-primary mt-3 w-25" type="submit">
-            @if (Loading)
-            {
-                <span class="spinner-border spinner-border-sm mr-1"></span>
-            }
-            Save schedule
-        </button>
         <button class="btn btn-primary mt-3 w-25" type="button">
-            Download as pdf
+            Download (pdf)
+        </button>
+        <button class="btn btn-danger mt-3 w-25" type="button" @onclick="@(async () => await DeleteScheduleAsync())">
+            Delete
         </button>
     </div>
 

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using ScheduleGenerator.Client.Helpers.ExtensionMethods;
 using ScheduleGenerator.Client.Services;
 using ScheduleGenerator.Client.Shared.Modals;
 using ScheduleGenerator.Shared.Dto;
@@ -18,16 +20,29 @@ namespace ScheduleGenerator.Client.Shared
         public int Id { get; set; }
 
         [Inject]
+        private IJSRuntime Js { get; set; }
+
+        [Inject]
         private IScheduleItemsService ScheduleItemsService { get; set; }
 
         [Inject]
+        private ISchedulesService SchedulesService { get; set; }
+
+        [Inject]
+        protected SchedulesState SchedulesState { get; set; }
+
+        [Inject]
         protected ScheduleItemsState ScheduleItemsState { get; set; }
+
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
 
         //protected ScheduleForCreationDto ScheduleForCreation = new();
         protected CreateScheduleItemModal CreateScheduleItemModal;
 
         protected bool Loading;
         protected bool LoadFailed;
+        protected bool DeleteFailed;
 
         protected override async Task OnParametersSetAsync()
         {
@@ -51,6 +66,24 @@ namespace ScheduleGenerator.Client.Shared
             }
             Loading = false;
 
+        }
+
+        protected async Task DeleteScheduleAsync()
+        {
+            if (await Js.Confirm($"Remove this schedule?"))
+            {
+                var response = await SchedulesService.DeleteScheduleAsync(Id);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    SchedulesState.DeleteSchedule(Id);
+                    NavigationManager.NavigateTo("");
+                }
+                else
+                {
+                    DeleteFailed = true;
+                }
+            }
         }
 
         public void Dispose()

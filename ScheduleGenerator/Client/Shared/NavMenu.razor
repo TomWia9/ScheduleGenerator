@@ -109,7 +109,7 @@
 
             loading = false;
 
-            SchedulesState.OnScheduleAdded += StateHasChanged;
+            SchedulesState.OnScheduleModified += StateHasChanged;
         }
     }
 
@@ -120,7 +120,7 @@
 
     public void Dispose()
     {
-        SchedulesState.OnScheduleAdded -= StateHasChanged;
+        SchedulesState.OnScheduleModified -= StateHasChanged;
     }
 }
 

@@ -67,7 +67,7 @@
                 <div class="modal-footer d-flex justify-content-between" style="background: #121212;">
                     <button type="button" class="btn btn-secondary w-25" data-dismiss="modal" @onclick="Close">Close</button>
                     <button type="button" class="btn btn-primary w-25" @onclick="@(() => _showEdit = !_showEdit)">Edit</button>
-                    <button type="button" class="btn btn-danger w-25" @onclick="@(async () => await DeleteScheduleItem())">Delete</button>
+                    <button type="button" class="btn btn-danger w-25" @onclick="@(async () => await DeleteScheduleItemAsync())">Delete</button>
                 </div>
             }
 
@@ -118,7 +118,7 @@
         StateHasChanged();
     }
 
-    private async Task DeleteScheduleItem()
+    private async Task DeleteScheduleItemAsync()
     {
         if (await Js.Confirm($"Remove {ScheduleItem.Subject} from the schedule?"))
         {
