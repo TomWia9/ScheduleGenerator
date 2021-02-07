@@ -8,8 +8,12 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentValidation;
 using ScheduleGenerator.Client.Services;
 using ScheduleGenerator.Client.Shared;
+using ScheduleGenerator.Shared.Auth;
+using ScheduleGenerator.Shared.Dto;
+using ScheduleGenerator.Shared.Validators;
 
 namespace ScheduleGenerator.Client
 {
@@ -30,6 +34,16 @@ namespace ScheduleGenerator.Client
             builder.Services.AddScoped<ISchedulesService, SchedulesService>();
             builder.Services.AddScoped<IScheduleItemsService, ScheduleItemsService>();
             builder.Services.AddScoped<IHttpService, HttpService>();
+
+            builder.Services.AddTransient<IValidator<AuthenticateRequest>, AuthenticateRequestValidator>();
+            builder.Services.AddTransient<IValidator<UserForCreationDto>, UserForCreationValidator>();
+            builder.Services.AddTransient<IValidator<ScheduleForCreationDto>, ScheduleForCreationValidator>();
+            builder.Services.AddTransient<IValidator<ScheduleForUpdateDto>, ScheduleForUpdateValidator>();
+            builder.Services.AddTransient<IValidator<ScheduleItemForCreationDto>, ScheduleItemForCreationValidator>();
+            builder.Services.AddTransient<IValidator<ScheduleItemForUpdateDto>, ScheduleItemForUpdateValidator>();
+
+            ValidatorOptions.Global.LanguageManager.Enabled = false;
+
 
             builder.Services.AddSingleton<SchedulesState>();
             builder.Services.AddSingleton<ScheduleItemsState>();

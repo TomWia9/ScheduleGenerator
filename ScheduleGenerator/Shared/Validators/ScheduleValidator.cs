@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FluentValidation;
+﻿using FluentValidation;
 using ScheduleGenerator.Shared.Dto;
 
-namespace ScheduleGenerator.Server.Validators
+namespace ScheduleGenerator.Shared.Validators
 {
     public abstract class ScheduleValidator<T> : AbstractValidator<T> where T : ScheduleForManipulationDto
     {

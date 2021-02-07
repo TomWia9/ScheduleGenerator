@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using AutoMapper;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
@@ -23,6 +24,9 @@ using ScheduleGenerator.Server.Filters;
 using ScheduleGenerator.Server.Helpers;
 using ScheduleGenerator.Server.Models;
 using ScheduleGenerator.Server.Repositories;
+using ScheduleGenerator.Shared.Auth;
+using ScheduleGenerator.Shared.Dto;
+using ScheduleGenerator.Shared.Validators;
 using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -66,9 +70,16 @@ namespace ScheduleGenerator.Server
 
             }).AddFluentValidation(options =>
             {
-                options.RegisterValidatorsFromAssemblyContaining<Startup>();
                 options.ValidatorOptions.LanguageManager.Enabled = false;
             });
+
+
+            services.AddTransient<IValidator<AuthenticateRequest>, AuthenticateRequestValidator>();
+            services.AddTransient<IValidator<UserForCreationDto>, UserForCreationValidator>();
+            services.AddTransient<IValidator<ScheduleForCreationDto>, ScheduleForCreationValidator>();
+            services.AddTransient<IValidator<ScheduleForUpdateDto>, ScheduleForUpdateValidator>();
+            services.AddTransient<IValidator<ScheduleItemForCreationDto>, ScheduleItemForCreationValidator>();
+            services.AddTransient<IValidator<ScheduleItemForUpdateDto>, ScheduleItemForUpdateValidator>();
 
             services.AddDbContext<ScheduleGeneratorContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ScheduleGeneratorConnection")));

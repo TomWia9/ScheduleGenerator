@@ -14,7 +14,7 @@
             </div>
 
             <EditForm Model="@ScheduleItemForCreation" OnValidSubmit="@(async () => await AddScheduleItemAsync())">
-                <DataAnnotationsValidator />
+                <FluentValidator></FluentValidator>
                 
                 <div class="d-flex flex-column" style="background: #181818">
                     <div class="modal-body d-flex justify-content-around align-items-center">

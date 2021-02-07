@@ -6,7 +6,7 @@
     <div class="card-body text-center justify-content-center" style="background: #181818">
 
         <EditForm Model="@ScheduleForCreation" OnValidSubmit="@(async () => await CreateScheduleAsync())">
-            <DataAnnotationsValidator />
+            <FluentValidator></FluentValidator>
             <div class="form-group text-white">
                 <div class="col-sm-8 offset-sm-2 text-center">
                     <label>Title</label>
