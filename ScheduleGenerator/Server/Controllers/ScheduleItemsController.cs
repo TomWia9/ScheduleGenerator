@@ -57,11 +57,6 @@ namespace ScheduleGenerator.Server.Controllers
                     return NotFound();
                 }
 
-                if (!_scheduleItemsRepository.IsDayOfWeekCorrect(scheduleId, scheduleItem.DayOfWeek))
-                {
-                    return BadRequest(new { message = "Day of week is incorrect" });
-                }
-
                 if (await _scheduleItemsRepository.DatesConflictAsync(scheduleId, scheduleItem.DayOfWeek,
                     scheduleItem.StartTime, scheduleItem.EndTime))
                 {
@@ -183,11 +178,6 @@ namespace ScheduleGenerator.Server.Controllers
                     return NotFound();
                 }
 
-                if (!_scheduleItemsRepository.IsDayOfWeekCorrect(scheduleId, scheduleItem.DayOfWeek))
-                {
-                    return BadRequest(new { message = "Day of week is incorrect" });
-                }
-
                 if (await _scheduleItemsRepository.DatesConflictAsync(scheduleId, scheduleItem.DayOfWeek,
                     scheduleItem.StartTime, scheduleItem.EndTime, scheduleItemId))
                 {
@@ -269,12 +259,6 @@ namespace ScheduleGenerator.Server.Controllers
                 if (!isValid)
                 {
                     return BadRequest(ModelState);
-                }
-
-
-                if (!_scheduleItemsRepository.IsDayOfWeekCorrect(scheduleId, scheduleItemToPatch.DayOfWeek))
-                {
-                    return BadRequest(new { message = "Day of week is incorrect" });
                 }
 
                 if (await _scheduleItemsRepository.DatesConflictAsync(scheduleId, scheduleItemToPatch.DayOfWeek,

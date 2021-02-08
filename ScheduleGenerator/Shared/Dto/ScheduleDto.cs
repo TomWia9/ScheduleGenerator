@@ -26,6 +26,5 @@ namespace ScheduleGenerator.Shared.Dto
         /// <summary>
         /// Schedule has 7 days flag
         /// </summary>
-        public bool Has7Days { get; set; }
     }
 }
