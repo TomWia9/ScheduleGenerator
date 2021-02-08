@@ -42,13 +42,6 @@ namespace ScheduleGenerator.Server.Repositories
             //no code in this implementation
         }
 
-        public bool AreDatesCorrect(DateTime startTime, DateTime endTime)
-        {
-            var time = endTime.TimeOfDay - startTime.TimeOfDay;
-            
-            return startTime.TimeOfDay < endTime.TimeOfDay && time.TotalMinutes >= 15;
-        }
-
         public bool IsDayOfWeekCorrect(int scheduleId, DayOfWeek dayOfWeek)
         {
             var schedule = _context.Schedules.Find(scheduleId);

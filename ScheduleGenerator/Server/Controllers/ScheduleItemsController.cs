@@ -57,11 +57,6 @@ namespace ScheduleGenerator.Server.Controllers
                     return NotFound();
                 }
 
-                if (!_scheduleItemsRepository.AreDatesCorrect(scheduleItem.StartTime, scheduleItem.EndTime))
-                {
-                    return BadRequest(new { message = "The difference between the start and end times should be at least 15 minutes" });
-                }
-
                 if (!_scheduleItemsRepository.IsDayOfWeekCorrect(scheduleId, scheduleItem.DayOfWeek))
                 {
                     return BadRequest(new { message = "Day of week is incorrect" });
@@ -188,11 +183,6 @@ namespace ScheduleGenerator.Server.Controllers
                     return NotFound();
                 }
 
-                if (! _scheduleItemsRepository.AreDatesCorrect(scheduleItem.StartTime, scheduleItem.EndTime))
-                {
-                    return BadRequest(new { message = "The difference between the start and end times should be at least 15 minutes " });
-                }
-
                 if (!_scheduleItemsRepository.IsDayOfWeekCorrect(scheduleId, scheduleItem.DayOfWeek))
                 {
                     return BadRequest(new { message = "Day of week is incorrect" });
@@ -281,10 +271,6 @@ namespace ScheduleGenerator.Server.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if (!_scheduleItemsRepository.AreDatesCorrect(scheduleItemToPatch.StartTime, scheduleItemToPatch.EndTime))
-                {
-                    return BadRequest(new { message = "The difference between the start and end times should be at least 15 minutes " });
-                }
 
                 if (!_scheduleItemsRepository.IsDayOfWeekCorrect(scheduleId, scheduleItemToPatch.DayOfWeek))
                 {
