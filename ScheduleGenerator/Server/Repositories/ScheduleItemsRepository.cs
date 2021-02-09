@@ -28,7 +28,7 @@ namespace ScheduleGenerator.Server.Repositories
         }
 
         //scheduleItemId is null by default because when new scheduleItem is created then id is unknown yet
-        public async Task<bool> DatesConflictAsync(int scheduleId, DayOfWeek dayOfWeek, DateTime startTime, DateTime endTime, int? scheduleItemId = null)
+        public async Task<bool> DatesConflictAsync(int scheduleId, WeekDay dayOfWeek, DateTime startTime, DateTime endTime, int? scheduleItemId = null)
         {
             if (!await _context.ScheduleItems.Where(i => i.ScheduleId == scheduleId && i.Id != scheduleItemId && i.DayOfWeek == dayOfWeek)
                 .AnyAsync(i => !(endTime.TimeOfDay < i.StartTime.TimeOfDay || startTime.TimeOfDay > i.EndTime.TimeOfDay)))

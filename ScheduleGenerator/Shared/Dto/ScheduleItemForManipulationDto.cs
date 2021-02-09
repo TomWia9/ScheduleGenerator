@@ -25,7 +25,7 @@ namespace ScheduleGenerator.Shared.Dto
         /// <summary>
         /// The day of week
         /// </summary>
-        public DayOfWeek DayOfWeek { get; set; }
+        public WeekDay DayOfWeek { get; set; }
         /// <summary>
         /// The start time of classes
         /// </summary>

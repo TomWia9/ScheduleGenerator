@@ -1,4 +1,5 @@
 ﻿@page "/schedules/{Id:int}"
+@using ScheduleGenerator.Shared.Enums
 @inherits ScheduleBase
 
 @if (Loading)
@@ -29,31 +30,31 @@ else
     <div class="d-flex justify-content-around mb-2" style="overflow-y: auto; height: 550px">
 
         <div class="text-white">
-            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == DayOfWeek.Monday))
+            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == WeekDay.Monday))
             {
                 <ScheduleItem Item="item"></ScheduleItem>
             }
         </div>
         <div class="text-white">
-            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == DayOfWeek.Tuesday))
+            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == WeekDay.Tuesday))
             {
                 <ScheduleItem Item="item"></ScheduleItem>
             }
         </div>
         <div class="text-white">
-            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == DayOfWeek.Wednesday))
+            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == WeekDay.Wednesday))
             {
                 <ScheduleItem Item="item"></ScheduleItem>
             }
         </div>
         <div class="text-white">
-            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == DayOfWeek.Thursday))
+            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == WeekDay.Thursday))
             {
                 <ScheduleItem Item="item"></ScheduleItem>
             }
         </div>
         <div class="text-white">
-            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == DayOfWeek.Friday))
+            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == WeekDay.Friday))
             {
                 <ScheduleItem Item="item"></ScheduleItem>
             }

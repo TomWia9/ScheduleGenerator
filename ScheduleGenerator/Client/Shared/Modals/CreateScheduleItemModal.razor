@@ -55,7 +55,7 @@
                             <div class="form-group mb-2 text-white">
                                 <label>Day of week</label>
                                 <InputSelect @bind-Value="ScheduleItemForCreation.DayOfWeek" class="form-control text-white bg-dark">
-                                    @foreach (var dayOfWeek in Enum.GetValues(typeof(DayOfWeek)))
+                                    @foreach (var dayOfWeek in Enum.GetValues(typeof(WeekDay)))
                                     {
                                         <option value="@dayOfWeek">@dayOfWeek</option>
                                     }

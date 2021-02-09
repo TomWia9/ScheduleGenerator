@@ -11,7 +11,7 @@ namespace ScheduleGenerator.Server.Repositories
     {
         Task<IEnumerable<ScheduleItem>> GetScheduleItemsAsync(int scheduleId);
         Task<ScheduleItem> GetScheduleItemAsync(int scheduleId, int scheduleItemId);
-        Task<bool> DatesConflictAsync(int scheduleId, DayOfWeek dayOfWeek, DateTime startTime, DateTime endTime, int? scheduleItemId = null);
+        Task<bool> DatesConflictAsync(int scheduleId, WeekDay dayOfWeek, DateTime startTime, DateTime endTime, int? scheduleItemId = null);
         void UpdateScheduleItem(ScheduleItem scheduleItem); 
         Color GetScheduleItemColor(TypeOfClasses typeOfClasses);
     }
