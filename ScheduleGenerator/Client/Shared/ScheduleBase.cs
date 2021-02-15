@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -84,6 +85,17 @@ namespace ScheduleGenerator.Client.Shared
                     DeleteFailed = true;
                 }
             }
+        }
+
+        protected async Task DownloadSchedule()
+        {
+            Console.WriteLine("download");
+
+            var scheduleName = SchedulesState.Schedules.FirstOrDefault(s => s.Id == Id)?.Name;
+
+            await Js.InvokeVoidAsync("generatePdf", scheduleName, "test");
+
+            Console.WriteLine("PDF just got created.");
         }
 
         public void Dispose()

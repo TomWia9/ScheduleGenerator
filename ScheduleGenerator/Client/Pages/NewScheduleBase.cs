@@ -14,8 +14,6 @@ namespace ScheduleGenerator.Client.Pages
     public class NewScheduleBase : ComponentBase
     {
         [Inject]
-        private IAuthenticationService AuthenticationService { get; set; }
-        [Inject]
         private ISchedulesService SchedulesService { get; set; }
 
         [Inject]
@@ -25,15 +23,6 @@ namespace ScheduleGenerator.Client.Pages
         protected ScheduleForCreationDto ScheduleForCreation { get; set; } = new();
         protected bool Conflict { get; set; }
         protected bool CreationFailed { get; set; }
-
-        protected override void OnInitialized()
-        {
-            //TODO Implement anonymous page where anonymous user can create schedule without saving it
-            //if (!AuthenticationService.IsUserLoggedIn())
-            //{
-            //    NavigationManager.NavigateTo("schedules/anonymous");
-            //}
-        }
 
         protected async Task CreateScheduleAsync()
         {
