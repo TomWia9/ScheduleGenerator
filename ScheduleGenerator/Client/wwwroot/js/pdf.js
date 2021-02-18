@@ -1,11 +1,14 @@
-﻿function generatePdf(scheduleName, text) {
+﻿function generatePdf(scheduleName) {
 
     const { jsPDF } = window.jspdf;
 
-    const doc = new jsPDF();
+    const pdf = new jsPDF("l", "pt", "a4");
 
-    doc.text(text, 10, 10);
+    console.log(document.getElementById("content"));
 
-    doc.save(scheduleName + ".pdf");
+    pdf.html(document.getElementById("content"), {
+        callback: function (pdf) {
+            pdf.save(scheduleName + ".pdf");
+        }
+    });
 }
-
