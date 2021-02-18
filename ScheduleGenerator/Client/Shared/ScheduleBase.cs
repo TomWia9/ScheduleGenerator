@@ -38,7 +38,6 @@ namespace ScheduleGenerator.Client.Shared
         [Inject]
         private NavigationManager NavigationManager { get; set; }
 
-        //protected ScheduleForCreationDto ScheduleForCreation = new();
         protected CreateScheduleItemModal CreateScheduleItemModal;
 
         protected bool Loading;
@@ -48,6 +47,7 @@ namespace ScheduleGenerator.Client.Shared
         protected override async Task OnParametersSetAsync()
         {
             await LoadItems();
+
             ScheduleItemsState.OnScheduleItemModified += StateHasChanged;
         }
 
@@ -63,7 +63,11 @@ namespace ScheduleGenerator.Client.Shared
             {
                 var items = await response.Content.ReadFromJsonAsync<IEnumerable<ScheduleItemDto>>();
 
-                ScheduleItemsState.ScheduleItems = items!.ToList();
+                ScheduleItemsState.ScheduleItems[WeekDay.Monday] = items!.Where(i => i.DayOfWeek == WeekDay.Monday).ToList();
+                ScheduleItemsState.ScheduleItems[WeekDay.Tuesday] = items!.Where(i => i.DayOfWeek == WeekDay.Tuesday).ToList();
+                ScheduleItemsState.ScheduleItems[WeekDay.Wednesday] = items!.Where(i => i.DayOfWeek == WeekDay.Wednesday).ToList();
+                ScheduleItemsState.ScheduleItems[WeekDay.Thursday] = items!.Where(i => i.DayOfWeek == WeekDay.Thursday).ToList();
+                ScheduleItemsState.ScheduleItems[WeekDay.Friday] = items!.Where(i => i.DayOfWeek == WeekDay.Friday).ToList();
             }
             Loading = false;
 
@@ -93,7 +97,7 @@ namespace ScheduleGenerator.Client.Shared
 
             var scheduleName = SchedulesState.Schedules.FirstOrDefault(s => s.Id == Id)?.Name;
 
-            await Js.InvokeVoidAsync("generatePdf", scheduleName, "test");
+            await Js.InvokeVoidAsync("generatePdf", scheduleName!);
 
             Console.WriteLine("PDF just got created.");
         }

@@ -21,54 +21,64 @@ else if (DeleteFailed)
 }
 else
 {
-    <div class="sticky-top d-flex justify-content-md-around mb-2 text-white w-100 border-bottom border-white">
-        <h6>Monday</h6>
-        <h6>Tuesday</h6>
-        <h6>Wednesday</h6>
-        <h6 class="mr-3">Thursday</h6>
-        <h6 class="mr-3">Friday</h6>
+    <div id="content" style="overflow-y: auto; height: 550px">
+        <table class="table table-dark text-center w-100" >
+            <thead>
+            <tr>
+                <th scope="col">Monday</th>
+                <th scope="col">Tuesday</th>
+                <th scope="col">Wednesday</th>
+                <th scope="col">Thursday</th>
+                <th scope="col">Friday</th>
+            </tr>
+            </thead>
+            <tbody >
+            @for (int i = 0; i < ScheduleItemsState.ScheduleItems.Values.Select(scheduleItem => scheduleItem.Count).Max(); i++)
+            {
+                <tr>
+                    <td>
+                        @if (i < ScheduleItemsState.ScheduleItems[WeekDay.Monday].Count)
+                        {
+                            <ScheduleItem Item="ScheduleItemsState.ScheduleItems[WeekDay.Monday].ElementAt(i)"></ScheduleItem>
+                        }
+                    </td>
+                    <td>
+                        @if (i < ScheduleItemsState.ScheduleItems[WeekDay.Tuesday].Count)
+                        {
+                            <ScheduleItem Item="ScheduleItemsState.ScheduleItems[WeekDay.Tuesday].ElementAt(i)"></ScheduleItem>
+                        }
+                    </td>
+                    <td >
+                        @if (i < ScheduleItemsState.ScheduleItems[WeekDay.Wednesday].Count)
+                        {
+                            <ScheduleItem Item="ScheduleItemsState.ScheduleItems[WeekDay.Wednesday].ElementAt(i)"></ScheduleItem>
+                        }
+                    </td>
+                    <td>
+                        @if (i < ScheduleItemsState.ScheduleItems[WeekDay.Thursday].Count)
+                        {
+                            <ScheduleItem Item="ScheduleItemsState.ScheduleItems[WeekDay.Thursday].ElementAt(i)"></ScheduleItem>
+                        }
+                    </td>
+                    <td>
+                        @if (i < ScheduleItemsState.ScheduleItems[WeekDay.Friday].Count)
+                        {
+                            <ScheduleItem Item="ScheduleItemsState.ScheduleItems[WeekDay.Friday].ElementAt(i)"></ScheduleItem>
+                        }
+                    </td>
+                </tr>
+            }
+
+            </tbody>
+        </table>
     </div>
 
-    <div class="d-flex justify-content-around mb-2" style="overflow-y: auto; height: 550px">
-
-        <div class="text-white">
-            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == WeekDay.Monday))
-            {
-                <ScheduleItem Item="item"></ScheduleItem>
-            }
-        </div>
-        <div class="text-white">
-            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == WeekDay.Tuesday))
-            {
-                <ScheduleItem Item="item"></ScheduleItem>
-            }
-        </div>
-        <div class="text-white">
-            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == WeekDay.Wednesday))
-            {
-                <ScheduleItem Item="item"></ScheduleItem>
-            }
-        </div>
-        <div class="text-white">
-            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == WeekDay.Thursday))
-            {
-                <ScheduleItem Item="item"></ScheduleItem>
-            }
-        </div>
-        <div class="text-white">
-            @foreach (var item in ScheduleItemsState.ScheduleItems.Where(i => i.DayOfWeek == WeekDay.Friday))
-            {
-                <ScheduleItem Item="item"></ScheduleItem>
-            }
-        </div>
-    </div>
-
-    <div class="w-100 d-flex justify-content-around border-top border-white mb-2">
+    <div class="w-100 d-flex justify-content-around border-top border-white my-2">
         <button class="btn btn-primary mt-3 w-25" @onclick="() => CreateScheduleItemModal.Open()" type="button">
             Add item
         </button>
         <button class="btn btn-primary mt-3 w-25" type="button" @onclick="DownloadSchedule">
-            Download (pdf)
+            Download
         </button>
         <button class="btn btn-danger mt-3 w-25" type="button" @onclick="@(async () => await DeleteScheduleAsync())">
             Delete
