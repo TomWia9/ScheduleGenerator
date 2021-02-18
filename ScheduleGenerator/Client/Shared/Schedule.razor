@@ -32,43 +32,21 @@ else
                 <th scope="col">Friday</th>
             </tr>
             </thead>
-            <tbody >
+            <tbody class="table-borderless">
             @for (int i = 0; i < ScheduleItemsState.ScheduleItems.Values.Select(scheduleItem => scheduleItem.Count).Max(); i++)
             {
                 <tr>
-                    <td>
-                        @if (i < ScheduleItemsState.ScheduleItems[WeekDay.Monday].Count)
-                        {
-                            <ScheduleItem Item="ScheduleItemsState.ScheduleItems[WeekDay.Monday].ElementAt(i)"></ScheduleItem>
-                        }
-                    </td>
-                    <td>
-                        @if (i < ScheduleItemsState.ScheduleItems[WeekDay.Tuesday].Count)
-                        {
-                            <ScheduleItem Item="ScheduleItemsState.ScheduleItems[WeekDay.Tuesday].ElementAt(i)"></ScheduleItem>
-                        }
-                    </td>
-                    <td >
-                        @if (i < ScheduleItemsState.ScheduleItems[WeekDay.Wednesday].Count)
-                        {
-                            <ScheduleItem Item="ScheduleItemsState.ScheduleItems[WeekDay.Wednesday].ElementAt(i)"></ScheduleItem>
-                        }
-                    </td>
-                    <td>
-                        @if (i < ScheduleItemsState.ScheduleItems[WeekDay.Thursday].Count)
-                        {
-                            <ScheduleItem Item="ScheduleItemsState.ScheduleItems[WeekDay.Thursday].ElementAt(i)"></ScheduleItem>
-                        }
-                    </td>
-                    <td>
-                        @if (i < ScheduleItemsState.ScheduleItems[WeekDay.Friday].Count)
-                        {
-                            <ScheduleItem Item="ScheduleItemsState.ScheduleItems[WeekDay.Friday].ElementAt(i)"></ScheduleItem>
-                        }
-                    </td>
+                    @foreach (var weekDay in ScheduleItemsState.ScheduleItems.Keys)
+                    {
+                        <td>
+                            @if (i < ScheduleItemsState.ScheduleItems[weekDay].Count)
+                            {
+                                <ScheduleItem Item="ScheduleItemsState.ScheduleItems[weekDay].ElementAt(i)"></ScheduleItem>
+                            }
+                        </td>
+                    }
                 </tr>
             }
-
             </tbody>
         </table>
     </div>
