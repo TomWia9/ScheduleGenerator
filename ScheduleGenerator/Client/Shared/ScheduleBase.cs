@@ -43,6 +43,7 @@ namespace ScheduleGenerator.Client.Shared
         protected bool Loading;
         protected bool LoadFailed;
         protected bool DeleteFailed;
+        protected bool ActivatePdfStyle;
 
         protected override async Task OnParametersSetAsync()
         {
@@ -93,13 +94,12 @@ namespace ScheduleGenerator.Client.Shared
 
         protected async Task DownloadSchedule()
         {
-            Console.WriteLine("download");
-
             var scheduleName = SchedulesState.Schedules.FirstOrDefault(s => s.Id == Id)?.Name;
 
+            ActivatePdfStyle = true;
             await Js.InvokeVoidAsync("generatePdf", scheduleName!);
-
-            Console.WriteLine("PDF just got created.");
+            await Task.Delay(1);
+            ActivatePdfStyle = false;
         }
 
         public void Dispose()

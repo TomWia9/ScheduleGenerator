@@ -21,35 +21,38 @@ else if (DeleteFailed)
 }
 else
 {
-    <div id="content" style="overflow-y: auto; height: 550px">
-        <table class="table table-dark text-center w-100" >
-            <thead>
-            <tr>
-                <th scope="col">Monday</th>
-                <th scope="col">Tuesday</th>
-                <th scope="col">Wednesday</th>
-                <th scope="col">Thursday</th>
-                <th scope="col">Friday</th>
-            </tr>
-            </thead>
-            <tbody class="table-borderless">
-            @for (int i = 0; i < ScheduleItemsState.ScheduleItems.Values.Select(scheduleItem => scheduleItem.Count).Max(); i++)
-            {
-                <tr>
-                    @foreach (var weekDay in ScheduleItemsState.ScheduleItems.Keys)
-                    {
-                        <td>
-                            @if (i < ScheduleItemsState.ScheduleItems[weekDay].Count)
-                            {
-                                <ScheduleItem Item="ScheduleItemsState.ScheduleItems[weekDay].ElementAt(i)"></ScheduleItem>
-                            }
-                        </td>
-                    }
+    <div style="overflow-y: auto; height: 550px">
+        <div id="content">
+            <table class="table text-center w-100 table-borderless" >
+                <thead>
+                <tr class="@(ActivatePdfStyle ? "" : "text-white")">
+                    <th scope="col">Monday</th>
+                    <th scope="col">Tuesday</th>
+                    <th scope="col">Wednesday</th>
+                    <th scope="col">Thursday</th>
+                    <th scope="col">Friday</th>
                 </tr>
-            }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @for (int i = 0; i < ScheduleItemsState.ScheduleItems.Values.Select(scheduleItem => scheduleItem.Count).Max(); i++)
+                {
+                    <tr>
+                        @foreach (var weekDay in ScheduleItemsState.ScheduleItems.Keys)
+                        {
+                            <td>
+                                @if (i < ScheduleItemsState.ScheduleItems[weekDay].Count)
+                                {
+                                    <ScheduleItem Item="ScheduleItemsState.ScheduleItems[weekDay].ElementAt(i)"></ScheduleItem>
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
     </div>
+    
 
     <div class="w-100 d-flex justify-content-around border-top border-white my-2">
         <button class="btn btn-primary mt-3 w-25" @onclick="() => CreateScheduleItemModal.Open()" type="button">
