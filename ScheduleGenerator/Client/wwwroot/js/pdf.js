@@ -5,7 +5,7 @@
 
     pdf.html(document.getElementById("content"), {
         html2canvas: {
-            scale: 0.5
+            scale: 0.488
         },
         callback: function (pdf) {
             pdf.save(scheduleName + ".pdf");

@@ -22,10 +22,10 @@ else if (DeleteFailed)
 else
 {
     <div style="overflow-y: auto; height: 550px">
-        <div id="content">
-            <table class="table text-center w-100 table-borderless" >
+        <div id="content">            
+            <table class="table">
                 <thead>
-                <tr class="@(ActivatePdfStyle ? "" : "text-white")">
+                <tr class="text-center @(ActivatePdfStyle ? "" : "text-white")">
                     <th scope="col">Monday</th>
                     <th scope="col">Tuesday</th>
                     <th scope="col">Wednesday</th>
@@ -33,16 +33,19 @@ else
                     <th scope="col">Friday</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="table-borderless">
                 @for (int i = 0; i < ScheduleItemsState.ScheduleItems.Values.Select(scheduleItem => scheduleItem.Count).Max(); i++)
                 {
                     <tr>
                         @foreach (var weekDay in ScheduleItemsState.ScheduleItems.Keys)
                         {
-                            <td>
+                            <td style="width: 20%">
                                 @if (i < ScheduleItemsState.ScheduleItems[weekDay].Count)
                                 {
-                                    <ScheduleItem Item="ScheduleItemsState.ScheduleItems[weekDay].ElementAt(i)"></ScheduleItem>
+                                    <div class=" text-center">
+                                        <ScheduleItem Item="ScheduleItemsState.ScheduleItems[weekDay].ElementAt(i)"></ScheduleItem>
+                                    </div>
+
                                 }
                             </td>
                         }
