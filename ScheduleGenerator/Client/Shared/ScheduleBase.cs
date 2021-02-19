@@ -97,9 +97,9 @@ namespace ScheduleGenerator.Client.Shared
             var scheduleName = SchedulesState.Schedules.FirstOrDefault(s => s.Id == Id)?.Name;
 
             ActivatePdfStyle = true;
-            await Js.InvokeVoidAsync("generatePdf", scheduleName!);
-            await Task.Delay(1);
-            ActivatePdfStyle = false;
+
+            await Task.Run(async () => await Js.InvokeVoidAsync("generatePdf", scheduleName!))
+                .ContinueWith(a => ActivatePdfStyle = false);
         }
 
         public void Dispose()
