@@ -85,7 +85,7 @@
 
     <div class="d-flex justify-content-between">
         <button type="button" class="btn btn-secondary w-25" @onclick="Cancel">Cancel</button>
-        <button type="submit" class="btn btn-primary w-25">Update item</button>
+        <button type="submit" class="btn btn-primary w-25">Edit item</button>
     </div>
 </EditForm>
 
@@ -104,9 +104,11 @@
 
     private bool _conflict;
     private bool _updateFailed;
+    private WeekDay oldWeekDay;
 
     protected override void OnInitialized()
     {
+        oldWeekDay = ScheduleItem.DayOfWeek;
         Mapper.Map(ScheduleItem, _scheduleItemForUpdate);
     }
 
@@ -118,7 +120,7 @@
         {
             var updatedItemResponse = await ScheduleItemsService.GetScheduleItemAsync(ScheduleItem.ScheduleId, ScheduleItem.Id);
             var updatedScheduleItem = await updatedItemResponse.Content.ReadFromJsonAsync<ScheduleItemDto>();
-            ScheduleItemsState.UpdateScheduleItem(updatedScheduleItem);
+            ScheduleItemsState.UpdateScheduleItem(updatedScheduleItem, oldWeekDay);
             await OnScheduleItemUpdated.InvokeAsync();
 
         }

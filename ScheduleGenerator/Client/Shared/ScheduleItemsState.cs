@@ -14,15 +14,34 @@ namespace ScheduleGenerator.Client.Shared
         public void AddScheduleItem(ScheduleItemDto item)
         {
             ScheduleItems[item.DayOfWeek].Add(item);
+          
+            ScheduleItems[item.DayOfWeek].Sort((x, y) => TimeSpan.Compare(x.StartTime.TimeOfDay, y.StartTime.TimeOfDay));
+            
             NotifyStateChanged();
         }
 
-        public void UpdateScheduleItem(ScheduleItemDto item)
+        public void UpdateScheduleItem(ScheduleItemDto item, WeekDay oldWeekDay)
         {
-            var index = ScheduleItems[item.DayOfWeek].FindIndex(i => i.Id == item.Id);
+            if (item.DayOfWeek == oldWeekDay)
+            {
+                var index = ScheduleItems[item.DayOfWeek].FindIndex(i => i.Id == item.Id);
 
-            if (index > -1)
-                ScheduleItems[item.DayOfWeek][index] = item;
+                if (index > -1)
+                    ScheduleItems[item.DayOfWeek][index] = item;
+            }
+            else
+            {
+                var index = ScheduleItems[oldWeekDay].FindIndex(i => i.Id == item.Id);
+
+                if (index > -1)
+                {
+                    ScheduleItems[oldWeekDay].RemoveAt(index);
+                    ScheduleItems[item.DayOfWeek].Add(item);
+                    ScheduleItems[oldWeekDay].Sort((x, y) => TimeSpan.Compare(x.StartTime.TimeOfDay, y.StartTime.TimeOfDay));
+                }
+            }
+
+            ScheduleItems[item.DayOfWeek].Sort((x, y) => TimeSpan.Compare(x.StartTime.TimeOfDay, y.StartTime.TimeOfDay));
 
             NotifyStateChanged();
         }
