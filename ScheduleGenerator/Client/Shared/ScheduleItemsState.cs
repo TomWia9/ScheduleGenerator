@@ -55,6 +55,12 @@ namespace ScheduleGenerator.Client.Shared
             NotifyStateChanged();
         }
 
+        public void Clear()
+        {
+            ScheduleItems = new Dictionary<WeekDay, List<ScheduleItemDto>>();
+            NotifyStateChanged();
+        }
+
         private void NotifyStateChanged() => OnScheduleItemModified?.Invoke();
 
     }

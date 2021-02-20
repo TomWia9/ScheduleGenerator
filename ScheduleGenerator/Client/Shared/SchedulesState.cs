@@ -26,6 +26,12 @@ namespace ScheduleGenerator.Client.Shared
             NotifyStateChanged();
         }
 
+        public void Clear()
+        {
+            Schedules = new List<ScheduleDto>();
+            NotifyStateChanged();
+        }
+
         private void NotifyStateChanged() => OnScheduleModified?.Invoke();
 
     }

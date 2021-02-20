@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using ScheduleGenerator.Client.Shared;
 using ScheduleGenerator.Shared.Auth;
 using ScheduleGenerator.Shared.Dto;
 
@@ -15,16 +16,20 @@ namespace ScheduleGenerator.Client.Services
         private readonly NavigationManager _navigationManager;
         private readonly IHttpService _httpService;
         private readonly ILocalStorageService _localStorageService;
+        private readonly SchedulesState _schedulesState;
+        private readonly ScheduleItemsState _scheduleItemsState;
 
         public AuthenticateResponse User { get; private set; }
 
         public AuthenticationService(
             NavigationManager navigationManager,
-            ILocalStorageService localStorageService, IHttpService httpService)
+            ILocalStorageService localStorageService, IHttpService httpService, SchedulesState schedulesState, ScheduleItemsState scheduleItemsState)
         {
             _navigationManager = navigationManager;
             _localStorageService = localStorageService;
             _httpService = httpService;
+            _schedulesState = schedulesState;
+            _scheduleItemsState = scheduleItemsState;
         }
 
         public async Task Initialize()
@@ -66,6 +71,8 @@ namespace ScheduleGenerator.Client.Services
         {
             User = null;
             await _localStorageService.RemoveItem("user");
+            _schedulesState.Clear();
+            _scheduleItemsState.Clear();
             _navigationManager.NavigateTo("", true);
         }
 
