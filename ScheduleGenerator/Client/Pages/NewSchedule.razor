@@ -1,5 +1,8 @@
 ﻿@page "/schedules/new"
+@using Microsoft.AspNetCore.Authorization
 @inherits NewScheduleBase
+@attribute [Authorize]
+
 
 <div class="card text-center mt-4">
     <h4 class="card-header text-white" style="background: #121212;">Create new schedule</h4>
