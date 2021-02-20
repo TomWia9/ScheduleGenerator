@@ -6,11 +6,11 @@
 <div class="card text-center my-4">
     @if (AuthenticationService.IsUserLoggedIn())
     {
-        <h4 class="card-header text-white bg-dark">Welcome @_email!</h4>
+    <h4 class="card-header text-white bg-dark">Welcome in ScheduleGenerator @_email!</h4>
     }
     else
     {
-        <h4 class="card-header text-white bg-dark">Welcome!</h4>
+        <h4 class="card-header text-white bg-dark">Welcome in ScheduleGenerator!</h4>
 
     }
 </div>
@@ -19,11 +19,15 @@
 {
     <div class="d-flex w-100 mt-5 justify-content-center align-items-center">
         <div class="action w-25 mx-2">
-            <button class="btn btn-primary w-100" style="height: 12rem">Create schedule without saving</button>
+            <NavLink href="schedules/anonymous">
+                <button class="btn btn-dark w-100" style="height: 12rem">Create schedule without saving</button>
+            </NavLink>
         </div>
         <p class="mx-4 text-white">OR</p>
         <div class="action w-25 mx-2">
-            <button class="btn btn-primary w-100" style="height: 12rem">Log in to save your schedule</button>
+            <NavLink href="authentication/login">
+                <button class="btn btn-dark w-100" style="height: 12rem">Log in to save your schedule</button>
+            </NavLink>
         </div>
     </div>
 }
