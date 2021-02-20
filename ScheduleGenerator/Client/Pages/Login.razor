@@ -4,37 +4,39 @@
 
 <EditForm Model="@AuthenticateRequest" OnValidSubmit="HandleValidSubmit">
     <FluentValidator></FluentValidator>
-<div class="card" style="height: 500px">
-    <h4 class="card-header text-white" style="background: #121212;">Sign in to the Schedule Generator application</h4>
+<div class=" d-flex justify-content-center">
+    <div class="card w-50" style="height: 500px">
+        <h4 class="card-header text-white" style="background: #121212;">Sign in to the Schedule Generator application</h4>
 
-    <div class="card-body" style="background: #181818">
+        <div class="card-body" style="background: #181818">
 
-        <div class="form-group text-white">
-            <label>Email</label>
-            <InputText @bind-Value="AuthenticateRequest.Email" class="form-control bg-dark text-white"/>
-            <ValidationMessage For="@(() => AuthenticateRequest.Email)"/>
-        </div>
-        <div class="form-group text-white">
-            <label>Password</label>
-            <InputText @bind-Value="AuthenticateRequest.Password" type="password" class="form-control bg-dark text-white"/>
-            <ValidationMessage For="@(() => AuthenticateRequest.Password)"/>
-        </div>
-        @if (!string.IsNullOrEmpty(Error))
-        {
-            <div class="alert alert-danger mt-3 mb-0">@Error</div>
-        }
-
-    </div>
-    <div class="card-footer text-white" style="background: #121212;">
-        <button class="btn btn-primary">
-            @if (Loading)
+            <div class="form-group text-white">
+                <label>Email</label>
+                <InputText @bind-Value="AuthenticateRequest.Email" class="form-control bg-dark text-white"/>
+                <ValidationMessage For="@(() => AuthenticateRequest.Email)"/>
+            </div>
+            <div class="form-group text-white">
+                <label>Password</label>
+                <InputText @bind-Value="AuthenticateRequest.Password" type="password" class="form-control bg-dark text-white"/>
+                <ValidationMessage For="@(() => AuthenticateRequest.Password)"/>
+            </div>
+            @if (!string.IsNullOrEmpty(Error))
             {
-                <span class="spinner-border spinner-border-sm mr-1"></span>
+                <div class="alert alert-danger mt-3 mb-0">@Error</div>
             }
-            Login
-        </button>
-    </div>
 
+        </div>
+        <div class="card-footer text-white d-flex justify-content-between" style="background: #121212;">
+            <button class="btn btn-primary">
+                @if (Loading)
+                {
+                    <span class="spinner-border spinner-border-sm mr-1"></span>
+                }
+                Login
+            </button>
+            <NavLink href="authentication/register">You don't have an account? Register now!</NavLink>
+        </div>
+    </div>
 </div>
 </EditForm>
 
