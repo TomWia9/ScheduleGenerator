@@ -3,7 +3,7 @@
 @inject IAuthenticationService AuthenticationService
 
 
-<div class="card text-center mt-4">
+<div class="card text-center my-4">
     @if (AuthenticationService.IsUserLoggedIn())
     {
         <h4 class="card-header text-white bg-dark">Welcome @_email!</h4>
@@ -11,13 +11,26 @@
     else
     {
         <h4 class="card-header text-white bg-dark">Welcome!</h4>
-    }
 
+    }
 </div>
+
+@if (!AuthenticationService.IsUserLoggedIn())
+{
+    <div class="d-flex w-100 mt-5 justify-content-center align-items-center">
+        <div class="action w-25 mx-2">
+            <button class="btn btn-primary w-100" style="height: 12rem">Create schedule without saving</button>
+        </div>
+        <p class="mx-4 text-white">OR</p>
+        <div class="action w-25 mx-2">
+            <button class="btn btn-primary w-100" style="height: 12rem">Log in to save your schedule</button>
+        </div>
+    </div>
+}
 
 @code {
 
-    private string _email;
+private string _email;
 
     protected override void OnInitialized()
     {
@@ -26,5 +39,4 @@
             _email = AuthenticationService.User.Email;
         }
     }
-
 }

@@ -4,14 +4,18 @@
 @inject IAuthenticationService AuthenticationService
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
+    @if (AuthenticationService.IsUserLoggedIn())
+    {
+        <div class="sidebar">
+            <NavMenu/>
         </div>
+    }
+   
 
     <div class="main">
 
         <div class="top-row px-4">
-           <LoginDisplay></LoginDisplay>
+            <LoginDisplay></LoginDisplay>
         </div>
 
         <div class="content px-4">
