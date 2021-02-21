@@ -1,7 +1,7 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
-using ScheduleGenerator.Shared.Auth;
+﻿using ScheduleGenerator.Shared.Auth;
 using ScheduleGenerator.Shared.Dto;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace ScheduleGenerator.Client.Services
 {

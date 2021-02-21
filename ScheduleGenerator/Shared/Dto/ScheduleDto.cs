@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScheduleGenerator.Shared.Dto
 {
@@ -23,8 +19,5 @@ namespace ScheduleGenerator.Shared.Dto
         /// The date of schedule creation
         /// </summary>
         public DateTime DateOfCreation { get; set; }
-        /// <summary>
-        /// Schedule has 7 days flag
-        /// </summary>
     }
 }

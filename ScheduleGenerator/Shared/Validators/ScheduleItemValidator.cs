@@ -1,6 +1,6 @@
-﻿using System;
-using FluentValidation;
+﻿using FluentValidation;
 using ScheduleGenerator.Shared.Dto;
+using System;
 
 namespace ScheduleGenerator.Shared.Validators
 {
@@ -12,7 +12,7 @@ namespace ScheduleGenerator.Shared.Validators
             RuleFor(i => i.RoomNumber).Length(1, 10);
             RuleFor(i => i.Lecturer).Length(3, 50);
             RuleFor(i => i.DayOfWeek).NotNull().IsInEnum();
-            RuleFor(i => i.StartTime).NotEmpty(); 
+            RuleFor(i => i.StartTime).NotEmpty();
             RuleFor(i => i.EndTime).NotEmpty().Must((i, endTime) => BeAValidDates(i.StartTime, endTime))
                 .WithMessage("The difference between the start and end times should be at least 15 minutes");
             RuleFor(i => i.TypeOfClasses).NotNull().IsInEnum();

@@ -1,8 +1,6 @@
-﻿using System;
+﻿using ScheduleGenerator.Server.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using ScheduleGenerator.Server.Models;
 
 namespace ScheduleGenerator.Server.Repositories
 {

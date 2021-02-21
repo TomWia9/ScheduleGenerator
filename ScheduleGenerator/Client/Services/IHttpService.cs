@@ -1,6 +1,6 @@
-﻿using System.Net.Http;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.JsonPatch;
 
 namespace ScheduleGenerator.Client.Services
 {

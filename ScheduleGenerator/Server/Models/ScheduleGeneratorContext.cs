@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using ScheduleGenerator.Server.Shared;
+﻿using Microsoft.EntityFrameworkCore;
 using ScheduleGenerator.Server.Shared.EntityConfiguration;
 
 namespace ScheduleGenerator.Server.Models
@@ -13,7 +8,7 @@ namespace ScheduleGenerator.Server.Models
         public ScheduleGeneratorContext(DbContextOptions<ScheduleGeneratorContext> options) : base(options)
         {
         }
-        
+
         public DbSet<User> Users { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<ScheduleItem> ScheduleItems { get; set; }

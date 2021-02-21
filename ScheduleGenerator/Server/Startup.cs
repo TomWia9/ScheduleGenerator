@@ -1,22 +1,15 @@
-using System;
-using System.IO;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
@@ -29,6 +22,11 @@ using ScheduleGenerator.Shared.Dto;
 using ScheduleGenerator.Shared.Validators;
 using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 
 namespace ScheduleGenerator.Server
 {
@@ -53,7 +51,7 @@ namespace ScheduleGenerator.Server
                         new CamelCasePropertyNamesContractResolver();
                 })
                 .AddXmlDataContractSerializerFormatters();
-            
+
             services.AddRazorPages();
 
             services.AddMvc(options =>
@@ -202,7 +200,7 @@ namespace ScheduleGenerator.Server
 
                 setupAction.DefaultModelExpandDepth(2);
                 setupAction.DefaultModelRendering(Swashbuckle.AspNetCore.SwaggerUI.ModelRendering.Model);
-               // setupAction.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
+                // setupAction.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
             });
 
             app.UseHttpsRedirection();

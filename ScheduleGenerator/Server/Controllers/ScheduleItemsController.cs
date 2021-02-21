@@ -293,7 +293,7 @@ namespace ScheduleGenerator.Server.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpDelete("{scheduleItemId}")]
-        public async Task<IActionResult> DeleteTodo(int scheduleId, int scheduleItemId)
+        public async Task<IActionResult> DeleteScheduleItem(int scheduleId, int scheduleItemId)
         {
             try
             {

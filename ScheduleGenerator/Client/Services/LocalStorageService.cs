@@ -1,6 +1,6 @@
-﻿using System.Text.Json;
+﻿using Microsoft.JSInterop;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.JSInterop;
 
 namespace ScheduleGenerator.Client.Services
 {

@@ -1,6 +1,6 @@
-﻿using System.Net.Http.Json;
+﻿using ScheduleGenerator.Shared.Dto;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
-using ScheduleGenerator.Shared.Dto;
 
 namespace ScheduleGenerator.Client.Services
 {

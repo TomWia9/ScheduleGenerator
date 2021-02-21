@@ -1,7 +1,7 @@
-﻿using System;
+﻿using ScheduleGenerator.Shared.Dto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using ScheduleGenerator.Shared.Dto;
 
 namespace ScheduleGenerator.Client.Shared
 {

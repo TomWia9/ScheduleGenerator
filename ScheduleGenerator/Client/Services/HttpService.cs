@@ -1,11 +1,11 @@
-﻿using System.IO;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using ScheduleGenerator.Shared.Auth;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.JsonPatch;
-using ScheduleGenerator.Shared.Auth;
 
 namespace ScheduleGenerator.Client.Services
 {

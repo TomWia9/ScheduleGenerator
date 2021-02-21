@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using ScheduleGenerator.Client.Helpers.ExtensionMethods;
 using ScheduleGenerator.Client.Services;
 using ScheduleGenerator.Client.Shared.Modals;
 using ScheduleGenerator.Shared.Dto;
 using ScheduleGenerator.Shared.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
 
 namespace ScheduleGenerator.Client.Shared
 {

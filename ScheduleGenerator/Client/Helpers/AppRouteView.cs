@@ -1,9 +1,9 @@
-﻿using System;
-using System.Net;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using ScheduleGenerator.Client.Services;
+using System;
+using System.Net;
 
 namespace ScheduleGenerator.Client.Helpers
 {

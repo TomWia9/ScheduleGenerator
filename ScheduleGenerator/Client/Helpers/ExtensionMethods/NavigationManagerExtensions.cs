@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components;
+using System;
 using System.Collections.Specialized;
 using System.Web;
-using Microsoft.AspNetCore.Components;
 
 namespace ScheduleGenerator.Client.Helpers.ExtensionMethods
 {

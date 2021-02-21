@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using ScheduleGenerator.Shared.Dto;
+﻿using ScheduleGenerator.Shared.Dto;
+using System.Threading.Tasks;
 
 namespace ScheduleGenerator.Client.Services
 {

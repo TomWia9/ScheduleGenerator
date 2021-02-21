@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ScheduleGenerator.Shared.Auth
+﻿namespace ScheduleGenerator.Shared.Auth
 {
     /// <summary>
     /// User with Id, Email and Token fields

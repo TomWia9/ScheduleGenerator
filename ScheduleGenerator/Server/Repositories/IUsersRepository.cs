@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ScheduleGenerator.Server.Models;
+﻿using ScheduleGenerator.Server.Models;
 using ScheduleGenerator.Shared.Auth;
+using System.Threading.Tasks;
 
 namespace ScheduleGenerator.Server.Repositories
 {

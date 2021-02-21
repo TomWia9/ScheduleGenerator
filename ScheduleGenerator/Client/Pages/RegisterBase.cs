@@ -1,10 +1,10 @@
-﻿using System;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using ScheduleGenerator.Client.Helpers.ExtensionMethods;
 using ScheduleGenerator.Client.Services;
 using ScheduleGenerator.Shared.Dto;
+using System;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace ScheduleGenerator.Client.Pages
 {
@@ -13,7 +13,7 @@ namespace ScheduleGenerator.Client.Pages
         [Inject]
         private IAuthenticationService AuthenticationService { get; set; }
 
-        [Inject] 
+        [Inject]
         private NavigationManager NavigationManager { get; set; }
 
         protected readonly UserForCreationDto UserForCreation = new();

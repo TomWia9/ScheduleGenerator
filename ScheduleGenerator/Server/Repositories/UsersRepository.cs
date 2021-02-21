@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using ScheduleGenerator.Server.Helpers;
 using ScheduleGenerator.Server.Models;
 using ScheduleGenerator.Shared.Auth;
 using ScheduleGenerator.Shared.Dto;
+using System.Threading.Tasks;
 
 namespace ScheduleGenerator.Server.Repositories
 {

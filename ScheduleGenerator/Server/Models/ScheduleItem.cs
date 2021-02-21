@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ScheduleGenerator.Shared.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using ScheduleGenerator.Shared.Enums;
 
 namespace ScheduleGenerator.Server.Models
 {

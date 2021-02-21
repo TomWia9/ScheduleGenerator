@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using ScheduleGenerator.Server.Models;
 using ScheduleGenerator.Server.Repositories;
 using ScheduleGenerator.Shared.Dto;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ScheduleGenerator.Server.Controllers
 {

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ScheduleGenerator.Shared.Dto;
+using ScheduleGenerator.Shared.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using ScheduleGenerator.Shared.Dto;
-using ScheduleGenerator.Shared.Enums;
 
 namespace ScheduleGenerator.Client.Shared
 {
@@ -14,9 +14,9 @@ namespace ScheduleGenerator.Client.Shared
         public void AddScheduleItem(ScheduleItemDto item)
         {
             ScheduleItems[item.DayOfWeek].Add(item);
-          
+
             ScheduleItems[item.DayOfWeek].Sort((x, y) => TimeSpan.Compare(x.StartTime.TimeOfDay, y.StartTime.TimeOfDay));
-            
+
             NotifyStateChanged();
         }
 

@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components;
+using ScheduleGenerator.Client.Shared;
+using ScheduleGenerator.Shared.Auth;
+using ScheduleGenerator.Shared.Dto;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using ScheduleGenerator.Client.Shared;
-using ScheduleGenerator.Shared.Auth;
-using ScheduleGenerator.Shared.Dto;
 
 namespace ScheduleGenerator.Client.Services
 {

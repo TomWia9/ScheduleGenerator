@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ScheduleGenerator.Shared.Dto
+﻿namespace ScheduleGenerator.Shared.Dto
 {
     /// <summary>
     /// User with Id and Email fields
